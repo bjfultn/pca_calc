@@ -2,9 +2,6 @@
 
 cd /code
 
-rm -rfv /code/static/*
-python manage.py collectstatic --noinput
-
 /wait
 /wait
 /wait

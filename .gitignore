@@ -152,4 +152,4 @@ db.json
 docker.env
 *.env
 *.env.*
-!env.example
+!docker.env.example
