@@ -4,6 +4,9 @@ from django.http import HttpResponse, JsonResponse, FileResponse
 from django.contrib.auth.decorators import login_required
 from db.models import Car
 from pca_calc.class_table import class_table
+from django.core.management import call_command
+from django.conf import settings
+import tempfile
 
 
 @login_required
@@ -115,8 +118,27 @@ def database_backup(request):
     if not request.user.is_superuser:
         return HttpResponse(status=404)
     else:
-        os.system(
-            'cd /code; python manage.py dumpdata --exclude auth.permission '
-            '--exclude contenttypes > db.json'
-        )
-        return FileResponse(open('/code/db.json', 'rb'), as_attachment=True)
+        # Create a temporary file
+        with tempfile.NamedTemporaryFile(delete=False, suffix='.json') as temp_file:
+            # Run dumpdata command
+            call_command(
+                'dumpdata',
+                '--exclude', 'auth.permission',
+                '--exclude', 'contenttypes',
+                '--exclude', 'sessions.session',
+                '--exclude', 'users.user',
+                stdout=temp_file
+            )
+            temp_file.flush()
+            
+            # Create the response
+            response = FileResponse(
+                open(temp_file.name, 'rb'),
+                as_attachment=True,
+                filename='db_backup.json'
+            )
+            
+            # Clean up the temporary file after sending
+            os.unlink(temp_file.name)
+            
+            return response

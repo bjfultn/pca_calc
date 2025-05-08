@@ -149,3 +149,7 @@ Thumbs.db
 
 # Project specific
 db.json
+docker.env
+*.env
+*.env.*
+!env.example
