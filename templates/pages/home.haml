@@ -1,0 +1,59 @@
+- extends "layouts/application.haml"
+
+- block content
+  .home
+    .splash
+      .container
+        .row
+          .col-md-12
+            %h1.title
+    .content
+      .container
+        .row
+        - if user.is_authenticated
+          .col-md-12
+            %h5.statbanner
+              Welcome {{ request.user.first_name }}!
+          .row.cards
+            .col-md-auto
+              .card
+                .card-header My Garage
+                .card-body
+                  %p
+                    View cars in my garage.
+                  %a.btn.btn-secondary.float-right{href: "/garage/"}
+                    Garage
+                    %i.fa.fa-arrow-right
+            .col-md-auto
+              .card
+                .card-header New Car
+                .card-body
+                  %p
+                    Add a new car to your garage.
+                  %a.btn.btn-secondary.float-right{href: "/garage/add"}
+                    Create
+                    %i.fa.fa-arrow-right
+            - if user.is_superuser
+                .col-md-auto
+                  .card
+                    .card-header Database
+                    .card-body
+                      %p
+                        Explore the database using SQL queries
+                      %a.btn.btn-secondary.float-right{href: "explorer/"}
+                        Explore
+                        %i.fa.fa-arrow-right
+        - else
+          .col-md-12
+            %h5.statbanner
+              Welcome!
+          .row.cards
+            .col-md-6
+              .card
+                .card-header Create Account
+                .card-body
+                  %p
+                    Create a new user account.
+                  %a.btn.btn-secondary.float-right{href: "/user/sign-up"}
+                    Sign Up
+                    %i.fa.fa-arrow-right

@@ -1,0 +1,26 @@
+!!!
+%html
+  {% load static %}
+  {% load pipeline %}
+  %head
+    %meta{charset: "utf-8"}
+    %meta{"http-equiv": "x-ua-compatible", content: "ie=edge", "content-encoding": "x-gzip"}
+    %meta{name: "viewport", content: "width=device-width, initial-scale=1, shrink-to-fit=no"}
+    {% include 'partials/layouts/favicons.haml' %}
+    %title
+      {% block title %}PCALA Autocross{% endblock %}
+    {% stylesheet 'application' %}
+    {{ form.media.css }}
+  %body
+    {% include "partials/layouts/navigation.haml" %}
+    {% include "partials/layouts/messages.haml" %}
+    {% include "partials/layouts/notice.haml" %}
+    {% block content %}{% endblock %}
+    {% include "partials/layouts/footer.haml" %}
+    :javascript
+      var CURRENT_URL = "{{ request.path }}";
+    {% javascript 'libs' %}
+    {% javascript 'application' %}
+    {{ form.media.js }}
+    {% block javascript %}{% endblock %}
+    

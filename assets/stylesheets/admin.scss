@@ -1,0 +1,40 @@
+.dashboard {
+  #container {
+    #content {
+      #content-main {
+        .module {
+          margin-bottom: 0px;
+          caption {
+            display: none;
+          }
+        }
+      }
+    }
+  }
+}
+.model-comment {
+  #container {
+    #content {
+      #content-main {
+        .object-tools {
+          .addlink {
+            display: none;
+          }
+        }
+      }
+    }
+  }
+}
+.app-users.change-form {
+  #container {
+    #content {
+      #content-main {
+        #user_form {
+          .field-password {
+            display: none;
+          }
+        }
+      }
+    }
+  }
+}

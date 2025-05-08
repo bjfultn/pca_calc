@@ -1,0 +1,211 @@
+.db_explorer {
+  padding: 0 0 20px;
+  min-height: 640px;
+  .navbar {
+    margin-bottom: 20px;
+  }
+  .hidden {
+    display: none;
+  }
+  .form-group {
+    .col-sm-10,
+    .control-label {
+      width: 100%;
+      max-width: 100%;
+      padding: 0px;
+    }
+    .text-center {
+      text-align: left !important;
+    }
+  }
+  .sql-panel {
+    margin-bottom: 20px;
+  }
+  #queries {
+    .table {
+      td, th {
+        text-align: center;
+      }
+      td:nth-child(1),
+      td:nth-child(2),
+      th:nth-child(1),
+      th:nth-child(2) {
+        text-align: left;
+      }
+    }
+  }
+  #query_area {
+    position: relative;
+    h2.small {
+      position: absolute;
+      top: 10px;
+      right: 20px;
+      font-size: 18px;
+      font-family: $font-family-sans-serif;
+      font-weight: 600;
+    }
+  }
+  .btn {
+    color: #212529;
+    background-color: #f8f9fa;
+    border-color: #f8f9fa;
+    margin: 0px;
+    &:hover {
+      color: #212529;
+      background-color: #e2e6ea;
+      border-color: #dae0e5;
+    }
+  }
+  .dropdown-menu {
+    z-index: 1200;
+    padding: 0px;
+    background-color: #f8f9fa;
+    .btn {
+      margin: 0px;
+      padding: 0px;
+      background-color: #f8f9fa;
+      border: 0px;
+    }
+    a, .btn {
+      color: #212529;
+      padding: 0px 5px;
+      &:hover {
+        color: #212529;
+        background-color: #e2e6ea;
+        display: block;
+      }
+    }
+  }
+  .search {
+    margin: 0px;
+    width: 50%;
+  }
+  .glyphicon {
+    display: inline-block;
+    font: normal normal normal 14px/1 FontAwesome;
+    font-size: inherit;
+    text-rendering: auto;
+    -webkit-font-smoothing: antialiased;
+  }
+  .glyphicon-download:before {
+    content: "\f019";
+  }
+  .glyphicon-new-window:before {
+    content: "\f135";
+    content: "\f144";
+  }
+  .glyphicon-trash:before {
+    content: "\f1f8";
+  }
+  .glyphicon-resize-full:before {
+    content: "\f065";
+  }
+  .glyphicon-education:before {
+    content: "\f05a";
+  }
+  .glyphicon-link:before {
+    content: "\f0c1";
+  }
+  #fullscreen, #counter-toggle, #pivot-bookmark {
+    padding: 0px;
+    font-size: 18px;
+  }
+  #fullscreen {
+    padding-left: 5px;
+  }
+  #playground_button {
+    i {
+      font-size: 18px;
+    }
+  }
+  #schema_frame {
+    border-bottom: 2px dashed $border-color;
+  }
+  .starter-template {
+    div[role="tabpanel"] {
+      .tab-content {
+        border-bottom: 2px dashed $border-color;
+        margin-bottom: 4px;
+      }
+      ul.nav-tabs {
+        border-bottom: 1px solid $primary-light;
+        li.active {
+          a {
+            color: #495057;
+            border-color: $primary-light $primary-light $primary-light;
+            background-color: $primary-light;
+          }
+        }
+        li {
+          a {
+            color: #17a2b8;
+            padding: 0.3rem 0.6rem;
+            margin: 0 5px -1px 0;
+            border: 1px solid transparent;
+            border-top-left-radius: .25rem;
+            border-top-right-radius: .25rem;
+            display: block;
+          }
+        }
+      }
+      .panel-heading {
+        padding: 5px 10px;
+        background-color: $primary-light;
+      }
+      .table {
+        tr {
+          th {
+            border-bottom: 0px;
+          }
+        }
+      }
+      .stats-th {
+        th {
+          padding: 1px 5px;
+          .stats-wrapper {
+            font-size: 14px;
+          }
+        }
+      }
+    }
+  }
+}
+
+.schema-wrapper {
+  padding: 0px;
+  .btn-link {
+    position: relative;
+    right: -1px;
+  }
+  .panel {
+    border-left: 1px solid $border-color;
+    margin-bottom: 5px;
+    h4 {
+      font-family: $font-family-sans-serif;
+      font-size: 16px;
+      line-height: 18px;
+      margin: 0px;
+    }
+    .table {
+      margin: 0px;
+      padding: 0px;
+      td, th {
+        margin: 0px;
+        padding: 0px;
+        code {
+          margin: 0px;
+          padding: 0px;
+        }
+      }
+    }
+    .text-muted {
+      text-align: right;
+    }
+  }
+  .schema-header {
+    padding-left: 5px;
+  }
+  .schema-table {
+    padding-left: 5px;
+  }
+}

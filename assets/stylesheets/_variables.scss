@@ -1,0 +1,122 @@
+  $blue: #0980fb;
+  $indigo: #6d3ce1;
+  $purple: #803ac8;
+  $pink: #D84082;
+  $red: #ed3f3f;
+  $orange: #F3722C;
+  $yellow: #F9C74F;
+  $green: #80aE5D;
+  $teal: #43AA8B;
+  $cyan: #17a2b8;
+$white: #fff;
+$gray-light: #ddd;
+$gray: #888;
+$gray-dark: #444;
+$black: #000;
+$primary: $blue;
+$secondary: #6c757d;
+$success: $green;
+$info: #0292a9;
+$warning: $yellow;
+$danger: $red;
+$light: #f8f9fa;
+$dark: #343a40;
+
+$breakpoint-xs: 0;
+$breakpoint-sm: 576px;
+$breakpoint-md: 768px;
+$breakpoint-lg: 992px;
+$breakpoint-xl: 1200px;
+$font-family-monospace: "Inconsolata", monospace;
+$font-family-sans-serif: "Formula 1 Site Text", sans-serif;
+$font-family-header: "Formula 1 Bold", sans-serif;
+$padding: 20px;
+$margin: 20px;
+
+// // Green/Teal
+// $primary-dark: #002f33;
+// $primary-medium: #006d77;
+// $primary-light: #83c5be;
+// $primary-faint: #edf6f9;
+
+// PCA
+$primary-dark: #0a1530;
+$primary-medium: #2d3f65;
+$primary-light: #84bcde;
+$primary-faint: #edf2f9;
+
+//Brown
+// $primary-dark: #422a14;
+// $primary-medium: #644A33;
+// $primary-light: #9E8772;
+// $primary-faint: #F9EEE2;
+
+//Purple
+// $primary-dark: #361A50;
+// $primary-medium: #7C6592;
+// $primary-light: lighten(#A090B0, 10%);
+// $primary-faint: lighten(#7C6592, 40%);
+
+// Orange
+// $primary-dark: #491900;
+// $primary-medium: #B74309;
+// $primary-light: #FF6E25;
+// $primary-faint: #fff1ea;
+
+// Red
+// $primary-dark: #530200;
+// $primary-medium: #8b3c3a;
+// $primary-light: #ddbfbe;
+// $primary-faint: #f3eceb;
+
+$border-color: $gray-light;
+
+.blue-color       { color: $blue !important; }
+.indigo-color     { color: $indigo !important; }
+.purple-color     { color: $purple !important; }
+.pink-color       { color: $pink !important; }
+.red-color        { color: $red !important; }
+.orange-color     { color: $orange !important; }
+.yellow-color     { color: $yellow !important; }
+.green-color      { color: $green !important; }
+.teal-color       { color: $teal !important; }
+.cyan-color       { color: $cyan !important; }
+.white-color      { color: $white !important; }
+.gray-light-color { color: $gray-light !important; }
+.gray-color       { color: $gray !important; }
+.gray-dark-color  { color: $gray-dark !important; }
+.black-color      { color: $black !important; }
+
+.primary-dark-color      { color: $primary-dark !important; }
+.primary-medium-color      { color: $primary-medium !important; }
+.primary-light-color      { color: $primary-light !important; }
+.primary-faint-color      { color: $primary-faint !important; }
+
+.blue-background       { background-color: $blue !important; }
+.indigo-background     { background-color: $indigo !important; }
+.purple-background     { background-color: $purple !important; }
+.pink-background       { background-color: $pink !important; }
+.red-background        { background-color: $red !important; }
+.orange-background     { background-color: $orange !important; }
+.yellow-background     { background-color: $yellow !important; }
+.green-background      { background-color: $green !important; }
+.teal-background       { background-color: $teal !important; }
+.cyan-background       { background-color: $cyan !important; }
+.white-background      { background-color: $white !important; }
+.gray-light-background { background-color: $gray-light !important; }
+.gray-background       { background-color: $gray !important; }
+.gray-dark-background  { background-color: $gray-dark !important; }
+.black-background      { background-color: $black !important; }
+
+.primary-dark-background   { background-color: $primary-dark !important;   color: $white !important; }
+.primary-medium-background { background-color: $primary-medium !important; color: $white !important; }
+.primary-light-background  { background-color: $primary-light !important;  color: $black !important; }
+.primary-faint-background  { background-color: $primary-faint !important;  color: $black !important; }
+
+.style_guide {
+  div {
+    height: 40px;
+    width: 10%;
+    float: left;
+  }
+}

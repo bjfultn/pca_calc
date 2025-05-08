@@ -1,0 +1,18 @@
+{% extends "layouts/application.haml" %}
+{% load widget_tweaks %}
+
+- block content
+  .main
+    .star_page
+      .row
+        -# .stars_table
+        -#   - include "partials/layouts/simple_tabulator.haml" with table_id="competition_table"
+        #competition_table.stars_table
+
+
+- block javascript
+  :javascript
+    $(document).ready( function () {
+      initCompetitionTable();
+    });
+

@@ -1,0 +1,89 @@
+- extends "layouts/application.haml"
+
+- block content
+  .style_demo
+    .content
+      .container
+        .row
+          .col-md-12
+            %h1
+              Theme
+          .col-md-3
+            .primary-dark-background.p-3
+              Primary Dark
+          .col-md-3
+            .primary-medium-background.p-3
+              Primary medium
+          .col-md-3
+            .primary-light-background.p-3
+              Primary Light
+          .col-md-3
+            .primary-faint-background.p-3
+              Primary Faint
+          .col-md-12.mt-3
+            %h1
+              Bootstrap
+            %h3
+              Buttons
+            %p
+              %button.btn.btn-primary{type: "button"}
+                Primary
+              %button.btn.btn-secondary{type: "button"}
+                Secondary
+              %button.btn.btn-success{type: "button"}
+                Success
+              %button.btn.btn-danger{type: "button"}
+                Danger
+              %button.btn.btn-warning{type: "button"}
+                Warning
+              %button.btn.btn-info{type: "button"}
+                Info
+              %button.btn.btn-light{type: "button"}
+                Light
+              %button.btn.btn-dark{type: "button"}
+                Dark
+              %button.btn.btn-link{type: "button"}
+                Link
+            %p
+              %button.btn.btn-primary.disabled{type: "button", disabled: "disabled"}
+                Primary
+              %button.btn.btn-secondary.disabled{type: "button", disabled: "disabled"}
+                Secondary
+              %button.btn.btn-success.disabled{type: "button", disabled: "disabled"}
+                Success
+              %button.btn.btn-danger.disabled{type: "button", disabled: "disabled"}
+                Danger
+              %button.btn.btn-warning.disabled{type: "button", disabled: "disabled"}
+                Warning
+              %button.btn.btn-info.disabled{type: "button", disabled: "disabled"}
+                Info
+              %button.btn.btn-light.disabled{type: "button", disabled: "disabled"}
+                Light
+              %button.btn.btn-dark.disabled{type: "button", disabled: "disabled"}
+                Dark
+              %button.btn.btn-link.disabled{type: "button", disabled: "disabled"}
+                Link
+        .row
+          .col-md-12
+            %h3
+              Alerts
+        .row
+          .col-md-4
+            .alert.alert-primary
+              Primary
+            .alert.alert-secondary
+              Secondary
+            .alert.alert-success
+              Success
+          .col-md-4
+            .alert.alert-danger
+              Danger
+            .alert.alert-warning
+              Warning
+            .alert.alert-info
+              Info
+          .col-md-4
+            .alert.alert-light
+              Light
+            .alert.alert-dark
+              Dark

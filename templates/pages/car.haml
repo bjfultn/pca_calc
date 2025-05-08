@@ -1,0 +1,59 @@
+{% extends "layouts/application.haml" %}
+- block content
+  {% load widget_tweaks %}
+  .container
+    .row
+      .col-md-4
+        %p
+          %h2 {{ car.year }} {{ car.make }} {{ car.model }}
+      .col-md-4
+        %p
+          %h3
+            Total Points: {{ car.total_points|floatformat:1 }}
+      .col-md-4
+        %p
+          %h3  
+            Class: {{ car.class_name }}
+    .row
+      .col-md-10.offset-md-1.user_login_page
+        %table.table.table-condensed
+          %thead
+            %tr
+              %th
+                %h4 Basic Car Properties ({{ car.base_points|floatformat:1 }} pts)
+          %tbody
+            %tr
+              %td
+                Color: {{ car.color }}
+                %br
+                Weight: {{ car.weight }}
+                %br
+                HP: {{ car.horsepower }}
+                %br
+                Wheel Widths: {{ car.front_wheel_width }}" (front) {{ car.rear_wheel_width }}" (rear)
+
+        %table.table.table-condensed
+          %thead
+            %tr
+              %th
+                %h4 Tires ({{ car.tires.last.tire_points|floatformat:1 }} pts)
+          %tbody
+            %tr
+              %td
+                Front width: {{ car.tires.last.front_section_width }} mm
+                %br
+                Rear width: {{ car.tires.last.rear_section_width }} mm
+                %br
+                Treadwear rating: {{ car.tires.last.treadwear }}
+                %br
+                DOT rated: {{ car.tires.last.dot }}
+
+        %table.table.table-condensed
+          %thead
+            %tr
+              %th
+                %h4 Upgrades ({{ car.upgrades.last.upgrade_points|floatformat:1 }} pts)
+          %tbody
+            %tr
+              %td
+                {{ car.upgrades.last.upgrade_table }}

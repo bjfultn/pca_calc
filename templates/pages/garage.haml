@@ -1,0 +1,40 @@
+- extends "layouts/application.haml"
+
+- block content
+  .home
+    .garage_splash
+      .container
+        .row
+          .col-md-12
+    .content
+      .container
+        .row
+        .row.cards
+          - for car in cars
+            .col-md-auto
+              .card
+                - if car.class_name
+                  .card-header <strong>{{ car.year }} {{ car.make }}</strong> ({{ car.class_name }})
+                - else
+                  .card-header {{ car.year }} {{ car.make }}
+                .card-body
+                  - if car.picture
+                    %p
+                      %img{src: "{{ car.picture.url }}"}
+                  %p
+                    {{car.color}} {{ car.year }} {{ car.make }} {{ car.model }}
+                  .float-left
+                    {{ car.total_points|floatformat:1 }}
+                  %a.btn.btn-secondary.float-right{href: "/garage/edit/{{ car.id }}"}
+                    Edit
+                    %i.fa.fa-arrow-right
+        .row.cards
+          .col-md-auto
+            .card
+              .card-header New Car
+              .card-body
+                %p
+                  Add a new car to your garage.
+                %a.btn.btn-secondary.float-right{href: "/garage/add"}
+                  Create
+                  %i.fa.fa-arrow-right

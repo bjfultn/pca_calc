@@ -1,0 +1,55 @@
+version: '3'
+
+services:
+  postgres:
+    env_file:
+      - docker.env
+    build: ./postgres
+    expose:
+      - "5432"
+    volumes:
+      - .:/code/
+      - ${HOME}/postgres/pca:/var/lib/postgresql/data
+    environment:
+      - POSTGRES_USER=postgres
+      - POSTGRES_PASSWORD=porsche
+      - POSTGRES_DB=pca
+      - DB_ROLE=development
+      - /etc/localtime:/etc/localtime
+  web:
+    env_file:
+      - docker.env
+    volumes:
+      - .:/code/
+      - /etc/localtime:/etc/localtime
+    build: .
+    command: sh /code/docker_init.sh
+    expose:
+      - "8008"
+    depends_on:
+      - postgres
+    environment:
+      WAIT_HOSTS: postgres:5432
+      TZ: US/Pacific
+
+  nginx:
+    build: ./nginx
+    restart: always
+    env_file:
+      - docker.env
+    ports:
+      - "8008:80"
+    links:
+      - web
+    volumes:
+      - .:/code/
+      - ./nginx/default.conf:/etc/nginx/conf.d/default.conf
+      - /etc/localtime:/etc/localtime
+  
+  redis:
+    image: redis
+    restart: always
+    expose:
+      - "6379"
+    links:
+      - web

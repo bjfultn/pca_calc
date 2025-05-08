@@ -1,0 +1,10 @@
+.user_login_page {
+  margin-top: 80px;
+  margin-bottom: 80px;
+  .errorlist {
+    margin: 0;
+    padding: 0;
+    list-style: none;
+    @extend .text-danger;
+  }
+}

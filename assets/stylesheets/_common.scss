@@ -1,0 +1,360 @@
+html {
+  background: $gray-light;
+
+  body {
+    color: $gray-dark;
+    background: $primary-faint;
+    &.modal-open {
+      overflow: auto;
+    }
+  }
+
+  a, a:link, a:visited, a:active {
+    color: $blue;
+  }
+
+  .btn, .btn:link, .btn:visited, .btn:active {
+    color: $gray-light;
+    font-family: $font-family-header;
+    &:hover {
+      color: $white;
+    }
+    &.btn-warning, &.btn-light {
+      color: $gray-dark;
+      &:hover {
+        color: $black;
+      }
+      &.disabled:hover {
+        color: inherit;
+      }
+    }
+    &.btn-link {
+      color: $blue;
+      text-decoration: none;
+    }
+  }
+
+  a:hover {
+    color: darken($blue, 6%);
+    text-decoration: none;
+  }
+
+  h1, h2, h3, h4, h5, h6,
+  p, pre, code, ul, ol, dl {
+    margin-bottom: 1rem;
+  }
+
+  h1, h2, h3, h4, h5, h6 {
+    font-family: $font-family-header;
+    font-weight: 600;
+  }
+
+  h1 {
+    font-size: 2.5rem;
+    line-height: 2.2rem;
+  }
+
+  h2 {
+    font-size: 2.2rem;
+    line-height: 1.9rem;
+  }
+
+  h3 {
+    font-size: 1.9rem;
+    line-height: 1.6rem;
+  }
+
+  h4 {
+    font-size: 1.6rem;
+    line-height: 1.3rem;
+  }
+
+  h5 {
+    font-size: 1.3rem;
+    line-height: 1rem;
+  }
+
+  h6 {
+    font-size: 1rem;
+    font-weight: 700;
+    font-family: $font-family-sans-serif;
+    line-height: 1rem;
+  }
+
+  strong, .strong {
+    font-weight: 700;
+  }
+
+  weak, .weak {
+    font-weight: 300;
+  }
+
+  code, pre {
+    display: block;
+    font-size: 1rem;
+    white-space: pre;
+  }
+
+  .hidden {
+    display: none;
+  }
+
+  .pre-wrap {
+    white-space: pre-wrap;
+  }
+
+  .pre {
+    white-space: pre;
+  }
+
+  .break {
+    flex-basis: 100%;
+    height: 0;
+  }
+
+  dl {
+    margin-bottom: 1rem;
+    dd {
+      padding-left: 15px;
+      margin: 0px;
+    }
+  }
+
+  .quote {
+    padding-left: $padding;
+    border-left: 3px solid $gray;
+    font-size: 110%;
+    font-style: italic;
+  }
+
+  .content {
+    padding: $padding 0;
+    min-height: 320px;
+  }
+
+  .group_table {
+    font-size: 90%;
+    th, td {
+      padding: 0.1rem;
+      text-align: right;
+    }
+    th {
+      font-weight: 400;
+    }
+    td {
+    }
+    .star_col {
+      width: 60px;
+    }
+    .temp_col {
+      width: 40px;
+    }
+    .last_col {
+      width: 50px;
+      min-width: 50px;
+    }
+    .n_col {
+      width: 30px;
+      min-width: 30px;
+    }
+    .nj_col {
+      width: 35px;
+      min-width: 35px;
+    }
+    .nj000_col {
+      width: 35px;
+      min-width: 35px;
+    }
+  }
+
+  .group_plots {
+    img {
+      max-width: 100%;
+    }
+  }
+
+  table.dataTable thead {
+    .sorting_asc,
+    .sorting_desc,
+    .sorting {
+      background: transparent;
+      &:before, &:after {
+        right: 5px !important;
+        font: normal normal normal 18px/1 FontAwesome;
+        text-rendering: auto;
+        -webkit-font-smoothing: antialiased;
+        color: #fff;
+      }
+    }
+    .sorting_asc {
+      &::before {
+        content: "\f0de";
+      }
+      &::after {
+        content: "\f0dd";
+        opacity: 0.5;
+      }
+    }
+    .sorting_desc {
+      &::before {
+        content: "\f0de";
+        opacity: 0.5;
+      }
+      &::after {
+        content: "\f0dd";
+      }
+    }
+    .sorting {
+      &::before {
+        content: "\f0dc";
+      }
+      &::after {
+        content: "";
+      }
+    }
+  }
+
+  .dataTables_paginate {
+    ul.pagination {
+      justify-content: center !important;
+    }
+  }
+
+  thead .units {
+    color: $gray;
+    font-size: 75%;
+  }
+
+  .card {
+    .card-header {
+      background-color: $primary-medium;
+      color: $gray-light;
+      font-weight: 700;
+    }
+    .card-car {
+      background: url('/static/images/gt3rs.jpg') center center no-repeat #000;
+      background-size: cover;
+      min-height: 100px;
+    }
+    margin-bottom: 20px;
+  }
+
+  .form-group.p {
+    position: relative;
+    overflow: hidden;
+    width: 50%;
+    float: left;
+  }
+  
+  .shaded {
+      opacity: 0.5;
+  }
+
+  .site_notice {
+    .modal-content {
+      overflow: hidden;
+      border-radius: 0.45rem;
+      cursor: pointer;
+    }
+    .btn {
+      margin: 0 auto;
+    }
+  }
+
+  select.custom-select {
+    background-image: url("/static/images/sort.svg");
+  }
+
+  .compact_tabulator {
+    .tabulator-header {
+      border: 0px;
+      .tabulator-frozen.tabulator-frozen-left {
+        border-right: 0px;
+      }
+      .tabulator-headers {
+        .tabulator-col {
+          background-color: $gray_dark;
+          color: $white;
+          span {
+            display: block;
+            font-size: 75%;
+          }
+          &:hover, &[aria-sort="asc"], &[aria-sort="desc"] {
+            background-color: $black;
+          }
+          .tabulator-col-content {
+            padding: 2px 5px;
+            min-height: 46px;
+          }
+          .tabulator-arrow {
+            border-bottom-color: $gray_light !important;
+          }
+          &[aria-sort="desc"] {
+            .tabulator-arrow {
+              border-top-color: $gray_light !important;
+            }
+          }
+        }
+      }
+    }
+    .tabulator-row.tabulator-selectable:hover {
+      cursor: default;
+      background-color: inherit;
+    }
+    .tabulator-table {
+    }
+    .tabulator-row {
+      border-bottom: 0px;
+      min-height: auto;
+      .tabulator-frozen.tabulator-frozen-left {
+        border-right: 0px;
+      }
+      &.tabulator-row-even {
+        background-color: darken($primary-faint, 4%);
+      }
+      .tabulator-cell {
+        padding: 2px 5px;
+      }
+      .tabulator-col-resize-handle {
+        width: 1px;
+        &.prev {
+          border-right: 1px solid $gray-light;
+        }
+      }
+    }
+    .tabulator-paginator {
+      .tabulator-pages {
+        .active {
+          border-color: $cyan;
+          background-color: $cyan;
+        }
+      }
+    }
+  }
+  .split {
+    -webkit-box-sizing: border-box;
+    -moz-box-sizing: border-box;
+    box-sizing: border-box;
+    overflow-y: auto;
+    overflow-x: hidden;
+  }
+  .gutter {
+    background-color: transparent !important;
+    background-repeat: no-repeat;
+    background-position: 50%;
+    position: relative;
+    z-index: 200;
+  }
+  .gutter.gutter-horizontal {
+    cursor: col-resize;
+    background:  url('/static/images/split_handle_horizontal.png') center center repeat-y transparent;
+    float: left;
+    margin: 0 -4px;
+    width: 8px !important;
+  }
+  .gutter.gutter-vertical {
+    cursor: row-resize;
+    background: url('/static/images/split_handle_vertical.png') center center repeat-x transparent;
+    height: 8px !important;
+  }
+}

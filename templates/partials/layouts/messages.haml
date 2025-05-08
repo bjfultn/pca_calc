@@ -1,0 +1,7 @@
+- for message in messages
+  .alert.alert-dismissible{class: "{{message.tags}}"}
+    %strong
+      {{ message }}
+    %button.close{type:"button", "data-dismiss": "alert", "aria-label": "Close"}
+      %span
+        &times;

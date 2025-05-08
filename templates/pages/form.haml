@@ -1,0 +1,56 @@
+{% extends "layouts/application.haml" %}
+- block content
+  {% load widget_tweaks %}
+  .container
+    .row
+      .md-col-12
+        %p
+          %h2
+            Total Points: {{ car.total_points|floatformat:1 }}
+        %p
+          %h2  
+            Class: {{ car.class_name }}
+    .row
+      .col-md-6.offset-md-3.user_login_page
+        %form#car_form{action: ".", method: "post", enctype: "multipart/form-data"}
+          - csrf_token
+          .form-group
+            {{ form.as_p }}
+          - if mode == 'edit'
+            .float-left
+              %a.button.btn.btn-danger{href: "delete/"}
+                Delete
+          .float-right
+            %button.btn.btn-info{type: "submit", name: "save", value: "Post"}
+              Save
+  .home
+    .container 
+      .content
+        .row.cards
+          .col-md-auto
+            .card
+              .card-header Car
+              .card-body
+                %p
+                  Basic Car Properties
+                %a.btn.btn-secondary.float-right{href: "/garage/edit/{{ carid }}"}
+                  Edit
+                  %i.fa.fa-arrow-right
+          .col-md-auto
+            .card
+              .card-header Tires
+              .card-body
+                %p
+                  Tire Properties
+                %a.btn.btn-secondary.float-right{href: "/garage/edit/{{ carid }}/tires"}
+                  Edit
+                  %i.fa.fa-arrow-right      
+          .col-md-auto
+            .card
+              .card-header Upgrades
+              .card-body
+                %p
+                  Performance Upgrades
+                %a.btn.btn-secondary.float-right{href: "/garage/edit/{{ carid }}/upgrades"}
+                  Edit
+                  %i.fa.fa-arrow-right      

@@ -1,0 +1,39 @@
+- extends "layouts/application.haml"
+- load widget_tweaks common_helpers
+
+- block content
+  .container.user_login_page
+    .row
+      .col-md-10.offset-md-2
+        %h2 User Settings
+    %form{method: "post"}
+      .row
+        .col-md-4.offset-md-2
+          {% csrf_token %}
+          {{form.username.errors}}
+          .form-group
+            %label {{ form.username.label_tag }}
+            {{ form.username|add_class:"form-control"|attr:"placeholder: Username" }}
+          {{form.email.errors}}
+          .form-group
+            %label {{ form.email.label_tag }}
+            {{ form.email|add_class:"form-control"|attr:"placeholder: Email Address" }}
+          {{form.first_name.errors}}
+          .form-group
+            %label {{ form.first_name.label_tag }}
+            {{ form.first_name|add_class:"form-control"|attr:"placeholder: First Name" }}
+          {{form.last_name.errors}}
+          .form-group
+            %label {{ form.last_name.label_tag }}
+            {{ form.last_name|add_class:"form-control"|attr:"placeholder: Last Name" }}
+
+        .col-md-4
+        
+        .col-md-4.offset-md-2
+          %button.btn.btn-primary{type: "submit"}
+            Save Settings
+          .float-right
+            -# .input-group#reset_cookies
+            -#   %input.button.btn.btn-warning{:type => "button", :value => "Reset Jump Cookies"}
+            %a.button.btn.btn-warning{href: "{% url 'password_change' %}"}
+              Change Password

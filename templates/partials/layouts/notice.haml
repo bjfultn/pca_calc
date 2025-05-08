@@ -1,0 +1,17 @@
+.site_notice.modal.fade{role: "dialog", tabindex: "-1"}
+  .modal-dialog.modal-dialog-centered{role: "document"}
+    .modal-content
+      .modal-header.primary-dark-background
+        %h4.modal-title
+          Submitting to iRacing
+        .float-right
+          %i.fa-3x.fa.fa-spinner.fa-spin
+      .modal-body
+        %p.strong
+          You sessions are being submitted to iRacing in the background. This may take a few minutes.
+        %p.strong
+          You may continue to browse or schedule more races while in progress.
+      .modal-footer.primary-faint-background
+        %a.btn.btn-dark{href: "/success/"}
+          Accept
+          %i.fa.fa-check

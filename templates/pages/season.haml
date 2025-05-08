@@ -1,0 +1,35 @@
+- extends "layouts/application.haml"
+- load common_helpers widget_tweaks
+
+- block content
+  .content.main
+    .container-fluid
+      .row
+        #adjustable_column_a.col
+          %h1
+            Previously Scheduled Seasons 
+          #seasons_table.stars_table
+        #adjustable_column_b.col
+          %h1
+            Schedule a Season
+          %form#race_form{action: "/season/", method: "post", enctype: "multipart/form-data"}
+            - csrf_token
+            .form-group
+              {{ form.as_table }}
+            .float-left
+              %button.btn.btn-primary#submit-to-iracing{type: "submit", name: "submit", value: "Post"}
+                Submit
+            .float-right
+              %button.btn.btn-primary{type: "submit", name: "save", value: "Post"}
+                Save
+
+- block javascript
+  :javascript
+    var csrftoken = document.getElementsByName('csrfmiddlewaretoken')[0].value;
+    $(document).ready( function () {
+      initSeasonTable();
+      gridSplit(["#adjustable_column_a", "#adjustable_column_b"], [60, 40], [500, 300]);
+      $('.django-select2').djangoSelect2({width: '100\%', 
+                                          dropdownAutoWidth : true});
+    });
+

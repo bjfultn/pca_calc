@@ -1,0 +1,250 @@
+.main {
+  .card {
+    margin-bottom: 10px;
+    .star_toggles {
+      a {
+        padding: 0rem 0.6rem;
+        margin: 0 0 0 5px;
+        color: $gray-light;
+        font-weight: 400;
+        &:hover, &.active {
+            color: $white;
+        }
+        &.disabled {
+          color: $gray-dark;
+          font-weight: 500;
+        }
+      }
+    }
+  }
+  
+  .warning {
+    color: $danger;
+  }
+  .star_heading {
+    margin-bottom: 20px;
+
+    .star_name {
+      margin: 0px;
+      a {
+      color: $primary-dark;
+      &:hover {
+          color: $primary-light;
+      }
+      }
+    }
+    .vmag_badge {
+      background-color: $primary-dark;
+    }
+    .program_badge {
+      background-color: $primary-medium;
+    }
+  }
+  .stats_dl {
+    margin-left: 1rem;
+    float: left;
+  }
+  #star_activity_tab {
+    iframe {
+      width: 100%;
+      height: 80vh;
+      border: 0;
+      background: url('/static/images/spinner.svg') center center no-repeat transparent;
+    }
+  }
+  #observing_plots_tab {
+    .input-group {
+      margin-bottom: 10px;
+      position: relative;
+      top: -5px;
+    }
+  }
+  #star_overview_tab {
+    h4 {
+      margin-bottom: 10px;
+    }
+  }
+  #star_radvel_tab {
+    .planet_fitting {
+      margin-bottom: 10px;
+      p {
+        margin-bottom: 5px;
+      }
+    }
+    .radvel_runs {
+      overflow-x: auto;
+      .radvel_downloads {
+        width: 100%;
+        margin-bottom: 5px;
+        th {
+          text-align: right;
+          width: 1px;
+          white-space: nowrap;
+        }
+      }
+      .update_button {
+        .btn {
+          margin: 0 0.2rem 0.1rem 0;
+        }
+      }
+    }
+  }
+
+  .stars_table {
+    background-color: $primary-faint;
+    border-bottom: 2px dashed $border-color;
+    margin: 2em;
+    .tabulator-header,
+    .tabulator-footer {
+      background-color: $primary-medium;
+      border: 0px;
+      .tabulator-calcs-holder {
+        background-color: $gray-dark !important;
+        color: $gray-light !important;
+        border: 0px;
+        overflow: scroll;
+          .tabulator-calcs {
+            background-color: $gray-dark !important;
+            color: $gray-light !important;
+            .tabulator-cell {
+              background-color: $gray-dark !important;
+              color: $gray-light !important;
+            }
+          }
+      }
+      .tabulator-frozen.tabulator-frozen-left {
+        border-right: 0px;
+      }
+      .tabulator-headers {
+        .tabulator-col {
+          background-color: $primary-medium;
+          color: $white;
+          span {
+            display: block;
+            font-size: 75%;
+          }
+          &:hover, &[aria-sort="asc"], &[aria-sort="desc"] {
+            background-color: $primary-dark;
+          }
+          .tabulator-col-content {
+            padding: 2px 5px;
+          }
+          .tabulator-arrow {
+            border-bottom-color: $gray_light !important;
+          }
+          &[aria-sort="desc"] {
+            .tabulator-arrow {
+              border-top-color: $gray_light !important;
+            }
+          }
+        }
+      }
+    }
+    .tabulator-footer {
+      .tabulator-calcs-holder {
+        overflow: visible;
+        background-color: $primary-medium;
+        color: $gray;
+      }
+    }
+    .tabulator-row.tabulator-selectable:hover {
+        cursor: default;
+    }
+    .tabulator-table {
+      background-color: $primary-faint;
+    }
+    .tabulator-row {
+      background-color: $primary-faint;
+      border-bottom: 0px;
+      min-height: auto;
+      .tabulator-frozen.tabulator-frozen-left {
+        border-right: 0px;
+      }
+      &.tabulator-row-even {
+        background-color: darken($primary-faint, 4%);
+      }
+      .tabulator-cell {
+        padding: 2px 5px;
+        height: auto !important;
+      }
+      .tabulator-col-resize-handle {
+        width: 1px;
+        &.prev {
+          border-right: 1px solid $gray-light;
+        }
+      }
+      &:hover{
+          background-color: $gray-light;
+      }
+    }
+
+  }
+  .fancy_table_filter {
+    margin-top: 25px;
+    .input-group {
+      width: 100%;
+      input {
+        width: 20%;
+      }
+      .input-group-text {
+        border-bottom-left-radius: 0;
+      }
+      .btn {
+        border-bottom-right-radius: 0;
+      }
+    }
+    .active_filters {
+      background-color: $gray-dark;
+      padding: 0 0 6px 6px;
+      width: 100%;
+      &:empty {
+        padding: 0px;
+      }
+      .filter {
+        background-color: $gray;
+        color: $gray-light;
+        display: inline-block;
+        white-space:nowrap;
+        line-height: 16px;
+        font-size: 16px;
+        border-radius: 32px;
+        padding: 5px 10px;
+        margin: 6px 6px 0 0;
+        .fa {
+          color: $gray-dark;
+          cursor: pointer;
+          margin-left: 3px;
+          &:hover {
+            color: $black;
+          }
+        }
+      }
+    }
+  }
+  .simple_filter {
+    .input-group {
+      width: 100%;
+      input {
+        width: 20%;
+      }
+      .input-group-text {
+        border-bottom-left-radius: 0;
+      }
+      .btn {
+        border-bottom-right-radius: 0;
+      }
+    }
+  }
+}
+@media (max-width: 767px) {
+  .star_page {
+    .programs_dropdown {
+      width: 90vw;
+    }
+    .static_plots {
+      img {
+        max-width: 100%;
+      }
+    }
+  }
+}

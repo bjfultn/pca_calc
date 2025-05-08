@@ -1,0 +1,11 @@
+.tabulator_group
+  .form-inline.simple_filter
+    .input-group
+      .input-group-prepend
+        .input-group-text
+          Filter
+      %input.simple_filter_input.form-control{type:"text", placeholder:"Type to filter ..."}
+      .input-group-append
+        %button.btn.btn-secondary.simple_filter_clear{type:"button", alt:"Clear", title:"Clear"}
+          %i.fa.fa-times-circle
+  .compact_tabulator{id: "{{table_id}}"}

@@ -1,0 +1,36 @@
+.navigation
+  %nav.navbar.navbar-expand-lg.navbar-dark.bg-dark
+    .container
+      %a.navbar-brand{href: "/"}
+        %h2
+          %img{src: "/static/images/logo.png"}
+      %button.navbar-toggler{"aria-controls": "navbarNav", "aria-expanded": "false", "aria-label": "Toggle navigation", "data-target": "#navbarNav", "data-toggle": "collapse", type: "button"}
+        %span.navbar-toggler-icon
+      #navbarNav.collapse.navbar-collapse
+        %ul.navbar-nav
+          %li.nav-item
+            %a.nav-link{href: "/garage"} Garage
+          %li.nav-item
+            %a.nav-link{href: "/competition"} Competition
+          - if user.is_superuser
+            %li.nav-item
+              %a.nav-link{href: "/explorer"} Database
+
+        - if user.is_authenticated
+          %ul.navbar-nav.ml-auto.user_actions
+            %li.nav-item{title: "Settings", alt: "Settings"}
+              %a.nav-link{href:"{% url 'profile'%}"}
+                %i.fa.fa-gears
+            - if user.is_superuser
+              %li.nav-item{title: "Admin", alt: "Admin"}
+                %a.nav-link{href:"/admin"}
+                  %i.fa.fa-lock
+            %li.nav-item{title: "Logout", alt: "Logout"}
+              %a.nav-link{href:"{% url 'logout'%}"}
+                %i.fa.fa-sign-out
+        - else
+          %ul.navbar-nav.ml-auto
+            %li.nav-item
+              %a.nav-link{href:"{% url 'login'%}"}
+                %i.fa.fa-sign-in
+                Login

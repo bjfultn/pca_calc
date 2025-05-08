@@ -1,0 +1,34 @@
+- load common_helpers
+
+.form-inline.fancy_table_filter{"data-tabulator": data_tabulator}
+  .input-group
+    .input-group-prepend
+      .input-group-text
+        Filter
+    %select#filter-field.custom-select
+      - for namespace in users_requested_columns
+        - for field in users_requested_columns|get_item:namespace
+          - if namespace != "Program"
+            %option{value: "{{namespace}}_{{field}}"} {{ candidates_table_columns|get_item:field|safe }}
+      %option{value: "program_list"}
+        = "Programs"
+      %option{value: "comment_list"}
+        = "Comments"
+    %select#filter-operator.custom-select
+      %option{value: "like"} like
+      %option{value: "!like"} not like
+      %option{value: "="} =
+      %option{value: "!="} !=
+      %option{value: "<"} <
+      %option{value: "<="} <=
+      %option{value: ">"} >
+      %option{value: ">="} >=
+    %input#filter-value.form-control{type:"text"}
+    .input-group-append
+      %button.btn.btn-dark#filter-add{type:"button", alt:"Add Filter", title:"Add Filter"}
+        %i.fa.fa-plus
+      %button.btn.btn-warning#column-reset{type:"button", alt:"Reset Column Order", title:"Reset Column Order"}
+        %i.fa.fa-columns
+      %button.btn.btn-success#download-candidates-csv{type:"button", alt:"Download as CSV", title:"Download as CSV"}
+        %i.fa.fa-download
+  .active_filters

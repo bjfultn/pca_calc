@@ -1,0 +1,43 @@
+{% extends "layouts/application.haml" %}
+{% block content %}
+  {% load widget_tweaks %}
+  .container
+    .row
+      .col-md-4.offset-md-4.user_login_page
+        %h2 Login
+        {% if form.errors %}
+          %p.red-color
+            %strong
+              Your username and password didn't match. Please try again.
+        {% endif %}
+        {% if next %}
+          {% if user.is_authenticated %}
+            %p.red-color
+              %strong
+                Your account doesn't have access to this page. To proceed, please login with an account that has access.
+          {% else %}
+            %p.red-color
+              %strong
+                Please login to see this page
+          {% endif %}
+        {% endif %}
+        %form{method:"post", action:"{% url 'login' %}"}
+          {% csrf_token %}
+          .form-group
+            %label {{ form.username.label_tag }}
+            {{ form.username|add_class:"form-control"|attr:"placeholder: Username" }}
+          .form-group
+            %label {{ form.password.label_tag }}
+            {{ form.password|add_class:"form-control"|attr:"placeholder: Password" }}
+          %button.btn.btn-primary{type:"submit"}
+            Login
+          %input{type:"hidden", name:"next", value:"{{ next }}"}
+        %hr
+        %ul
+          %li
+            %a{href:"{% url 'password_reset' %}"}
+              Lost password?
+          -# %li
+          -#   %a{href:"{% url 'sign_up' %}"}
+          -#     Sign Up
+{% endblock %}

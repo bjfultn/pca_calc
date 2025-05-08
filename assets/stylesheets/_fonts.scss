@@ -1,0 +1,121 @@
+//
+// Google Web Fonts
+//
+@font-face {
+  font-family: 'Inconsolata';
+  font-style: normal;
+  font-weight: 400;
+  src: url('/static/fonts/inconsolata-v17-latin-regular.eot'); /* IE9 Compat Modes */
+  src: local('Inconsolata Regular'), local('Inconsolata-Regular'),
+       url('/static/fonts/inconsolata-v17-latin-regular.eot?#iefix') format('embedded-opentype'), /* IE6-IE8 */
+       url('/static/fonts/inconsolata-v17-latin-regular.woff2') format('woff2'), /* Super Modern Browsers */
+       url('/static/fonts/inconsolata-v17-latin-regular.woff') format('woff'), /* Modern Browsers */
+       url('/static/fonts/inconsolata-v17-latin-regular.ttf') format('truetype'), /* Safari, Android, iOS */
+       url('/static/fonts/inconsolata-v17-latin-regular.svg#Inconsolata') format('svg'); /* Legacy iOS */
+}
+@font-face {
+  font-family: 'Inconsolata';
+  font-style: normal;
+  font-weight: 700;
+  src: url('/static/fonts/inconsolata-v17-latin-700.eot'); /* IE9 Compat Modes */
+  src: local('Inconsolata Bold'), local('Inconsolata-Bold'),
+       url('/static/fonts/inconsolata-v17-latin-700.eot?#iefix') format('embedded-opentype'), /* IE6-IE8 */
+       url('/static/fonts/inconsolata-v17-latin-700.woff2') format('woff2'), /* Super Modern Browsers */
+       url('/static/fonts/inconsolata-v17-latin-700.woff') format('woff'), /* Modern Browsers */
+       url('/static/fonts/inconsolata-v17-latin-700.ttf') format('truetype'), /* Safari, Android, iOS */
+       url('/static/fonts/inconsolata-v17-latin-700.svg#Inconsolata') format('svg'); /* Legacy iOS */
+}
+@font-face {
+  font-family: 'Source Sans Pro';
+  font-style: normal;
+  font-weight: 300;
+  src: url('/static/fonts/source-sans-pro-v11-latin-300.eot'); /* IE9 Compat Modes */
+  src: local('Source Sans Pro Light'), local('SourceSansPro-Light'),
+       url('/static/fonts/source-sans-pro-v11-latin-300.eot?#iefix') format('embedded-opentype'), /* IE6-IE8 */
+       url('/static/fonts/source-sans-pro-v11-latin-300.woff2') format('woff2'), /* Super Modern Browsers */
+       url('/static/fonts/source-sans-pro-v11-latin-300.woff') format('woff'), /* Modern Browsers */
+       url('/static/fonts/source-sans-pro-v11-latin-300.ttf') format('truetype'), /* Safari, Android, iOS */
+       url('/static/fonts/source-sans-pro-v11-latin-300.svg#SourceSansPro') format('svg'); /* Legacy iOS */
+}
+@font-face {
+  font-family: 'Source Sans Pro';
+  font-style: normal;
+  font-weight: 400;
+  src: url('/static/fonts/source-sans-pro-v11-latin-regular.eot'); /* IE9 Compat Modes */
+  src: local('Source Sans Pro Regular'), local('SourceSansPro-Regular'),
+       url('/static/fonts/source-sans-pro-v11-latin-regular.eot?#iefix') format('embedded-opentype'), /* IE6-IE8 */
+       url('/static/fonts/source-sans-pro-v11-latin-regular.woff2') format('woff2'), /* Super Modern Browsers */
+       url('/static/fonts/source-sans-pro-v11-latin-regular.woff') format('woff'), /* Modern Browsers */
+       url('/static/fonts/source-sans-pro-v11-latin-regular.ttf') format('truetype'), /* Safari, Android, iOS */
+       url('/static/fonts/source-sans-pro-v11-latin-regular.svg#SourceSansPro') format('svg'); /* Legacy iOS */
+}
+@font-face {
+  font-family: 'Source Sans Pro';
+  font-style: normal;
+  font-weight: 700;
+  src: url('/static/fonts/source-sans-pro-v11-latin-700.eot'); /* IE9 Compat Modes */
+  src: local('Source Sans Pro Bold'), local('SourceSansPro-Bold'),
+       url('/static/fonts/source-sans-pro-v11-latin-700.eot?#iefix') format('embedded-opentype'), /* IE6-IE8 */
+       url('/static/fonts/source-sans-pro-v11-latin-700.woff2') format('woff2'), /* Super Modern Browsers */
+       url('/static/fonts/source-sans-pro-v11-latin-700.woff') format('woff'), /* Modern Browsers */
+       url('/static/fonts/source-sans-pro-v11-latin-700.ttf') format('truetype'), /* Safari, Android, iOS */
+       url('/static/fonts/source-sans-pro-v11-latin-700.svg#SourceSansPro') format('svg'); /* Legacy iOS */
+}
+@font-face {
+  font-family: 'Barlow Condensed';
+  font-style: normal;
+  font-weight: 300;
+  src: url('/static/fonts/barlow-condensed-v2-latin-300.eot'); /* IE9 Compat Modes */
+  src: local('Barlow Condensed Light'), local('BarlowCondensed-Light'),
+       url('/static/fonts/barlow-condensed-v2-latin-300.eot?#iefix') format('embedded-opentype'), /* IE6-IE8 */
+       url('/static/fonts/barlow-condensed-v2-latin-300.woff2') format('woff2'), /* Super Modern Browsers */
+       url('/static/fonts/barlow-condensed-v2-latin-300.woff') format('woff'), /* Modern Browsers */
+       url('/static/fonts/barlow-condensed-v2-latin-300.ttf') format('truetype'), /* Safari, Android, iOS */
+       url('/static/fonts/barlow-condensed-v2-latin-300.svg#BarlowCondensed') format('svg'); /* Legacy iOS */
+}
+@font-face {
+  font-family: 'Barlow Condensed';
+  font-style: normal;
+  font-weight: 400;
+  src: url('/static/fonts/barlow-condensed-v2-latin-regular.eot'); /* IE9 Compat Modes */
+  src: local('Barlow Condensed Regular'), local('BarlowCondensed-Regular'),
+       url('/static/fonts/barlow-condensed-v2-latin-regular.eot?#iefix') format('embedded-opentype'), /* IE6-IE8 */
+       url('/static/fonts/barlow-condensed-v2-latin-regular.woff2') format('woff2'), /* Super Modern Browsers */
+       url('/static/fonts/barlow-condensed-v2-latin-regular.woff') format('woff'), /* Modern Browsers */
+       url('/static/fonts/barlow-condensed-v2-latin-regular.ttf') format('truetype'), /* Safari, Android, iOS */
+       url('/static/fonts/barlow-condensed-v2-latin-regular.svg#BarlowCondensed') format('svg'); /* Legacy iOS */
+}
+@font-face {
+  font-family: 'Barlow Condensed';
+  font-style: normal;
+  font-weight: 600;
+  src: url('/static/fonts/barlow-condensed-v2-latin-600.eot'); /* IE9 Compat Modes */
+  src: local('Barlow Condensed SemiBold'), local('BarlowCondensed-SemiBold'),
+       url('/static/fonts/barlow-condensed-v2-latin-600.eot?#iefix') format('embedded-opentype'), /* IE6-IE8 */
+       url('/static/fonts/barlow-condensed-v2-latin-600.woff2') format('woff2'), /* Super Modern Browsers */
+       url('/static/fonts/barlow-condensed-v2-latin-600.woff') format('woff'), /* Modern Browsers */
+       url('/static/fonts/barlow-condensed-v2-latin-600.ttf') format('truetype'), /* Safari, Android, iOS */
+       url('/static/fonts/barlow-condensed-v2-latin-600.svg#BarlowCondensed') format('svg'); /* Legacy iOS */
+}
+
+@font-face {
+  font-family: 'Formula 1 Bold';
+  font-style: bold;
+  font-weight: 600;
+  src: url('https://www.formula1.com/etc/designs/fom-website/fonts/F1Bold/Formula1-Bold.woff2');
+}
+
+@font-face {
+  font-family: 'Formula 1';
+  font-style: normal;
+  font-weight: 600;
+  src: url('https://www.formula1.com/etc/designs/fom-website/fonts/F1Regular/Formula1-Regular.woff2');
+}
+
+@font-face {
+  font-family: 'Formula 1 Site Text';
+  font-style: normal;
+  font-weight: 600;
+  src: url('https://fonts.gstatic.com/s/titilliumweb/v10/NaPecZTIAOhVxoMyOr9n_E7fdMPmDaZRbrw.woff2');
+}
+

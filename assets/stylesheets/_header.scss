@@ -1,0 +1,21 @@
+.navigation {
+  .navbar {
+    background-color: $primary-dark !important;
+    font-family: $font-family-header;
+  }
+  .navbar-brand {
+    height: 60px;
+    padding: 0;
+    img {
+      height: 65px;
+    }
+  }
+  .user_actions {
+    -ms-flex-direction: row !important;
+    flex-direction: row !important;
+    .nav-link {
+      padding-right: 0.5rem;
+      padding-left: 0.5rem;
+    }
+  }
+}
