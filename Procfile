@@ -1,0 +1,1 @@
+web: gunicorn pca_calc.wsgi:application --bind 0.0.0.0:$PORT 
