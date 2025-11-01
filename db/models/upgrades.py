@@ -9,6 +9,61 @@ from django.utils.safestring import mark_safe
 from logger import log
 from pca_calc import settings
 
+# Default hard-coded points (used as fallback if DB definitions aren't available)
+DEFAULT_UPGRADE_POINTS = {
+    'mid_engine': 15,
+    'traction_control': 10,
+    'induction': 40,
+    'engine_head': 50,
+    'camshaft': 50,
+    'forced_induction': 150,
+    'boost': 100,
+    # displacement handled specially (per-unit multiplier fallback)
+    'muffler': 5,
+    'cats': 5,
+    'headers': 5,
+    'differential': 20,
+    'final_drive': 40,
+    'pdk': 15,
+    'shocks': 20,
+    'shock_tower': 10,
+    'factory_springs': 15,
+    'aftermarket_springs': 30,
+    'fixed_sway': 10,
+    'adj_sway': 20,
+    'custom_suspension': 10,
+    'camber': 20,
+    'spherical_bearings': 10,
+    'tube_frame': 100,
+    'factory_aero': 10,
+    'oem_aero': 20,
+    'aftermarket_aero': 40,
+    'windshield_delete': 60,
+    'brakes': 20,
+}
+
+
+class UpgradeDefinition(models.Model):
+        """Editable definitions for each upgrade type.
+
+        key: matches the field name on `Upgrades` (e.g. 'mid_engine').
+        points: fixed points to apply when the boolean is True.
+        per_unit: if set, used for numeric fields like `displacement` as
+            `ceil(per_unit * value)`.
+        """
+        key = models.CharField(max_length=64, unique=True)
+        label = models.CharField(max_length=200)
+        description = models.TextField(blank=True)
+        points = models.FloatField(default=0)
+        per_unit = models.FloatField(null=True, blank=True)
+        order = models.IntegerField(default=0)
+
+        class Meta:
+                ordering = ['order', 'key']
+
+        def __str__(self):
+                return f"{self.label} ({self.key})"
+
 class Upgrades(models.Model):
     car = models.ForeignKey('Car', on_delete=models.CASCADE, related_name="upgrades",
                              blank=True, null=True)
@@ -80,45 +135,71 @@ class Upgrades(models.Model):
     def upgrade_table(self):
         installed = "<h5>Installed:</h5>"
         not_installed = "<h5>Not installed:</h5>"
+
+        # Try to load editable definitions from DB; fall back to field.verbose_name
+        try:
+            defs = {d.key: d for d in UpgradeDefinition.objects.all()}
+        except Exception:
+            defs = {}
+
         for field in self._meta.get_fields():
-            if getattr(self, field.name) == True:
-                installed += field.verbose_name + "<br>"
-            elif getattr(self, field.name) == False:
-                not_installed += field.verbose_name + "<br>"
+            # skip relationship/id fields
+            if not hasattr(self, field.name):
+                continue
+
+            label = None
+            if field.name in defs:
+                label = defs[field.name].description or defs[field.name].label
+            else:
+                label = getattr(field, 'verbose_name', field.name)
+
+            val = getattr(self, field.name)
+            # displacement is numeric; show its label and value
+            if field.name == 'displacement':
+                not_installed += f"{label}: {val}%<br>"
+                continue
+
+            if val is True:
+                installed += f"{label}<br>"
+            elif val is False:
+                not_installed += f"{label}<br>"
 
         output = installed + "<br>" + not_installed
         return mark_safe(output)
 
     def upgrade_points(self):
-        tp = 15*self.mid_engine
-        tp += 10*self.traction_control
-        tp += 40*self.induction
-        tp += 50*self.engine_head
-        tp += 50*self.camshaft
-        tp += 150*self.forced_induction
-        tp += 100*self.boost
-        tp += math.ceil(3.6*self.displacement)
-        tp += 5*self.muffler
-        tp += 5*self.cats
-        tp += 5*self.headers
-        tp += 20*self.differential
-        tp += 40*self.final_drive
-        tp += 15*self.pdk
-        tp += 20*self.shocks
-        tp += 10*self.shock_tower
-        tp += 15*self.factory_springs
-        tp += 30*self.aftermarket_springs
-        tp += 10*self.fixed_sway
-        tp += 20*self.adj_sway
-        tp += 10*self.custom_suspension
-        tp += 20*self.camber
-        tp += 10*self.spherical_bearings
-        tp += 100*self.tube_frame
-        tp += 10*self.factory_aero
-        tp += 20*self.oem_aero
-        tp += 40*self.aftermarket_aero
-        tp += 60*self.windshield_delete
-        tp += 20*self.brakes
+        # Try to load editable definitions from DB; fall back to hard-coded values
+        try:
+            defs = {d.key: d for d in UpgradeDefinition.objects.all()}
+        except Exception:
+            defs = {}
+
+        tp = 0
+
+        # Helper to get points for a boolean field
+        def points_for(key, value):
+            if key in defs:
+                try:
+                    return int(defs[key].points) * int(bool(value))
+                except Exception:
+                    return int(DEFAULT_UPGRADE_POINTS.get(key, 0)) * int(bool(value))
+            return int(DEFAULT_UPGRADE_POINTS.get(key, 0)) * int(bool(value))
+
+        # Sum up boolean-based upgrades
+        for key in DEFAULT_UPGRADE_POINTS.keys():
+            # displacement handled separately
+            if key == 'displacement':
+                continue
+            tp += points_for(key, getattr(self, key, False))
+
+        # Forced special-case: displacement
+        if 'displacement' in defs and defs['displacement'].per_unit:
+            try:
+                tp += math.ceil(defs['displacement'].per_unit * self.displacement)
+            except Exception:
+                tp += math.ceil(3.6 * self.displacement)
+        else:
+            tp += math.ceil(3.6 * self.displacement)
 
         return tp
     
