@@ -25,7 +25,7 @@ BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 SECRET_KEY = config('SECRET_KEY', default='your-secret-key-here')
 
 LANGUAGE_CODE = 'en-us'
-TIME_ZONE = 'US/Pacific'
+TIME_ZONE = 'America/Los_Angeles'
 # TIME_ZONE = 'UTC'
 USE_I18N = True
 USE_L10N = True
@@ -139,7 +139,7 @@ PIPELINE = {
     'JS_COMPRESSOR': 'pipeline.compressors.uglifyjs.UglifyJSCompressor',
     'CSS_COMPRESSOR': 'pipeline.compressors.yuglify.YuglifyCompressor',
     'COMPILERS': (
-        'libsasscompiler.LibSassCompiler',
+        'pipeline.compilers.sass.SASSCompiler',
     ),
     'STYLESHEETS': {
         'application': {

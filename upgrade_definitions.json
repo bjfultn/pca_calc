@@ -1,0 +1,234 @@
+[
+  {
+    "key": "mid_engine",
+    "label": "Mid Engine",
+    "description": "Is your car mid-engine or all electric? (15 points)",
+    "points": 15.0,
+    "per_unit": null,
+    "order": 0
+  },
+  {
+    "key": "traction_control",
+    "label": "Traction Control",
+    "description": "Electronically adjustable shocks and/or active suspension, including PASM (10 points)",
+    "points": 10.0,
+    "per_unit": null,
+    "order": 501
+  },
+  {
+    "key": "induction",
+    "label": "Induction",
+    "description": "Induction system modifications (e.g. upgrade carbs to fuel injection) (40 points)",
+    "points": 40.0,
+    "per_unit": null,
+    "order": 1
+  },
+  {
+    "key": "engine_head",
+    "label": "Engine Head",
+    "description": "Non-stock heads (e.g. port/polish, compression changes) (50 points)",
+    "points": 50.0,
+    "per_unit": null,
+    "order": 2
+  },
+  {
+    "key": "camshaft",
+    "label": "Camshaft",
+    "description": "Non-stock camshaft (50 points)",
+    "points": 50.0,
+    "per_unit": null,
+    "order": 3
+  },
+  {
+    "key": "forced_induction",
+    "label": "Forced Induction",
+    "description": "Added a turbo or supercharger? (150 points)",
+    "points": 150.0,
+    "per_unit": null,
+    "order": 4
+  },
+  {
+    "key": "boost",
+    "label": "Boost",
+    "description": "Increased or adjustable boost, or modifications to the wastegate or turbocharger (100 points)",
+    "points": 100.0,
+    "per_unit": null,
+    "order": 5
+  },
+  {
+    "key": "displacement",
+    "label": "Displacement",
+    "description": "Is the engine displacement larger than stock? If yes, by what percentage? (0=no increase, 100=doubled displacement) (36 x fractional increase points",
+    "points": 0,
+    "per_unit": 3.6,
+    "order": 6
+  },
+  {
+    "key": "muffler",
+    "label": "Muffler",
+    "description": "Upgraded or deleted muffler (5 points)",
+    "points": 5.0,
+    "per_unit": null,
+    "order": 100
+  },
+  {
+    "key": "cats",
+    "label": "Cats",
+    "description": "Deleted catalytic converter (5 points)",
+    "points": 5.0,
+    "per_unit": null,
+    "order": 101
+  },
+  {
+    "key": "headers",
+    "label": "Headers",
+    "description": "Non-stock exhaust manifold or headers (5 points)",
+    "points": 5.0,
+    "per_unit": null,
+    "order": 102
+  },
+  {
+    "key": "differential",
+    "label": "Differential",
+    "description": "Does your car have a stock/aftermarket LSD or AWD? (20 points)",
+    "points": 20.0,
+    "per_unit": null,
+    "order": 200
+  },
+  {
+    "key": "final_drive",
+    "label": "Final Drive",
+    "description": "Non-stock final drive ratio (40 points)",
+    "points": 40.0,
+    "per_unit": null,
+    "order": 201
+  },
+  {
+    "key": "pdk",
+    "label": "Pdk",
+    "description": "Is your car an EV or does your car have a PDK, dual clutch, or sequential transmission? (15 points)",
+    "points": 15.0,
+    "per_unit": null,
+    "order": 202
+  },
+  {
+    "key": "shocks",
+    "label": "Shocks",
+    "description": "Non-stock shocks with external reservoirs or 2+ way adjustability (20 points)",
+    "points": 20.0,
+    "per_unit": null,
+    "order": 300
+  },
+  {
+    "key": "shock_tower",
+    "label": "Shock Tower",
+    "description": "Non-stock shock tower brace (10 point)",
+    "points": 0,
+    "per_unit": null,
+    "order": 301
+  },
+  {
+    "key": "factory_springs",
+    "label": "Factory Springs",
+    "description": "Non-stock factory springs (within the same series) (15  points)",
+    "points": 15.0,
+    "per_unit": null,
+    "order": 302
+  },
+  {
+    "key": "aftermarket_springs",
+    "label": "Aftermarket Springs",
+    "description": "Aftermarket springs or factory springs from a different model series. (30 points)",
+    "points": 30.0,
+    "per_unit": null,
+    "order": 303
+  },
+  {
+    "key": "fixed_sway",
+    "label": "Fixed Sway",
+    "description": "Non-stock non-adjustable sway bar(s) (10 points)",
+    "points": 10.0,
+    "per_unit": null,
+    "order": 304
+  },
+  {
+    "key": "adj_sway",
+    "label": "Adj Sway",
+    "description": "Non-stock adjustable sway bar(s) (20 points)",
+    "points": 20.0,
+    "per_unit": null,
+    "order": 305
+  },
+  {
+    "key": "custom_suspension",
+    "label": "Custom Suspension",
+    "description": "Suspension changes to lower a car that require machining, welding, etc. or their equivalent. (10 points)",
+    "points": 10.0,
+    "per_unit": null,
+    "order": 306
+  },
+  {
+    "key": "camber",
+    "label": "Camber",
+    "description": "Any change to the suspension components or mounting points to increase available negative camber (20 points)",
+    "points": 20.0,
+    "per_unit": null,
+    "order": 307
+  },
+  {
+    "key": "spherical_bearings",
+    "label": "Spherical Bearings",
+    "description": "Installation of \u201cMonoball\u201d suspension bushings or equivalent 10 (points)",
+    "points": 0,
+    "per_unit": null,
+    "order": 308
+  },
+  {
+    "key": "tube_frame",
+    "label": "Tube Frame",
+    "description": "Tube frame chassis (100 points)",
+    "points": 100.0,
+    "per_unit": null,
+    "order": 400
+  },
+  {
+    "key": "factory_aero",
+    "label": "Factory Aero",
+    "description": "Non-stock aero devices that came from another car within the same model series. (10 points)",
+    "points": 10.0,
+    "per_unit": null,
+    "order": 401
+  },
+  {
+    "key": "oem_aero",
+    "label": "Oem Aero",
+    "description": "Non-stock aero devices that came from another car not within the same model series. (20 points)",
+    "points": 20.0,
+    "per_unit": null,
+    "order": 402
+  },
+  {
+    "key": "aftermarket_aero",
+    "label": "Aftermarket Aero",
+    "description": "Any aftermarket aero devices. (40 points)",
+    "points": 40.0,
+    "per_unit": null,
+    "order": 403
+  },
+  {
+    "key": "windshield_delete",
+    "label": "Windshield Delete",
+    "description": "Removal or alteration of windshield (other than replacement with lighter weight materials) (60 points)",
+    "points": 60.0,
+    "per_unit": null,
+    "order": 404
+  },
+  {
+    "key": "brakes",
+    "label": "Brakes",
+    "description": "Brake Upgrades (other than drilled/gas slotted stock rotors, brake pads, master cylinder, or aftermarket rotors with no increase in diameter). Includes factory or post-delivery installation of ceramic brakes (20 points)",
+    "points": 20.0,
+    "per_unit": null,
+    "order": 500
+  }
+]
