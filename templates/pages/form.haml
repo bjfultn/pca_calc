@@ -14,6 +14,11 @@
       .col-md-6.offset-md-3.user_login_page
         %form#car_form{action: ".", method: "post", enctype: "multipart/form-data"}
           - csrf_token
+          - if form.non_field_errors
+            .alert.alert-danger
+              %ul.mb-0
+                - for error in form.non_field_errors
+                  %li= error
           .form-group
             {{ form.as_p }}
           - if mode == 'edit'

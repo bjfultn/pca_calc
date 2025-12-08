@@ -15,10 +15,10 @@ class Car(models.Model):
     model = models.CharField(max_length=30, null=True)
     color = models.CharField(max_length=30, null=True)
     weight = models.IntegerField(null=True,
-                                verbose_name="Curb weight or measured weight [lb]")
+                                verbose_name=r"Curb weight is the weight of the vehicle including a full tank of fuel and all standard equipment. It does not include the weight of the driver, any passengers, cargo, or optional equipment. If possible, it is preferred to measure the actual weight of your car with a full tank of fuel, no passengers, and all modifications installed as ready to race.  This can be accomplished at shops performing a corner balance alignment, or you can Google 'public scales near me' to find DMV weigh stations.  Be prepared to show photos proving your car's weight if it is significantly different than its original Curb Weight.")
     horsepower = models.IntegerField(null=True,
-                                verbose_name=r"Factory rated HP or measured at the crank. Assume 10% losses to convert wheel HP to crank HP.")
-    front_wheel_width = models.FloatField(null=True, verbose_name="Front wheel width [in]")
+                                verbose_name=r"Assume 10% losses to convert wheel HP to crank HP as measured on a wheel dyno [preferred]. If your car dyno'd at 386 whp (wheel horsepower) --> 386*1.10 = 424.6 crank hp --> Enter 425. Note: Be prepared to show your dyno results if a fellow competitor asks.")
+    front_wheel_width = models.FloatField(null=True, verbose_name=r"Front wheel width [in]. To measure wheel width, find the measurement on the wheel's stamp (often XXJ, where XX is the width in inches).  This is the value wheel manufacturers advertise as the wheel width.  Alternatively, you can manually measure the distance between the two bead seats (the inner lips where the tire sits) with a tape measure or straight edge and a ruler. This 'bead seat to bead seat' measurement is the official rim width and will be roughly 1 inch less than the total outer width of the wheel.")
     rear_wheel_width = models.FloatField(null=True, verbose_name="Rear wheel width [in]")
     # picture = models.ImageField(upload_to="./avatars/", blank=True)
 
@@ -33,6 +33,8 @@ class Car(models.Model):
 
     def class_name(self):
         try:
+            if self.tires.last().race_tires:
+                return 'CC18'
             if self.total_points():
                 for cls,rng in class_table.items():
                     if rng[0] < self.total_points() <= rng[1]:
