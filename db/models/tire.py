@@ -14,7 +14,7 @@ class Tire(models.Model):
     rear_section_width = models.IntegerField(null=True,
                             verbose_name="Section width of rear tires [mm]")
     race_tires = models.BooleanField(default=False,
-                            verbose_name="Do you have race tires? Treadwear less than 140, or no official treadwear will automatically put your car into CC18 as the penalty is applied during registration. Be sure to check the box during registration.")
+                            verbose_name="Do you have race tires? Treadwear less than 140, or no official treadwear will automatically put your car into CC18. The only exception to this is for Porsches that are 1998 and older. They will be classed with 200tw “AutoX tire” and then bumped up 2 classes.")
     autox_tires = models.BooleanField(default=False,
                             verbose_name="Do you have autox tires? Treadwear greater than or equal to 140, but less than or equal to 200 (+20 points)")
     street_tires = models.BooleanField(default=False,
@@ -41,7 +41,7 @@ class Tire(models.Model):
         try:
             tp = (self.front_section_width - 205) + (self.rear_section_width - 205)
 
-            if self.autox_tires:
+            if self.autox_tires or self.race_tires:
                 tp += 20
         except TypeError:
             tp = 0

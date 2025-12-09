@@ -31,13 +31,19 @@ class Car(models.Model):
     class Meta:
         ordering = ('-year',)
 
+    def old_porsche(self):
+        return int(self.year) <= 1998 and self.make.lower() == 'porsche'
+
     def class_name(self):
         try:
-            if self.tires.last().race_tires:
+            if not self.old_porsche() and self.tires.last().race_tires:
                 return 'CC18'
             if self.total_points():
                 for cls,rng in class_table.items():
                     if rng[0] < self.total_points() <= rng[1]:
+                        if self.old_porsche() and self.tires.last().race_tires:
+                            intcls = cls[2:]
+                            return 'CC' + str(int(intcls) + 2)
                         return cls
         except:
             return ''
