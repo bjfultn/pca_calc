@@ -32,15 +32,17 @@ class Car(models.Model):
         ordering = ('-year',)
 
     def class_name(self):
+        class_string = ''
         try:
-            if self.tires.last().race_tires:
-                return 'CCR'
             if self.total_points():
                 for cls,rng in class_table.items():
                     if rng[0] < self.total_points() <= rng[1]:
-                        return cls
-        except:
-            return ''
+                        class_string = cls
+            if self.tires.last().race_tires:
+                class_string = f'CCR ({class_string})'
+            return class_string
+        except Exception as e:
+            return e
 
     def base_points(self):
         wheels = 5*(self.front_wheel_width + self.rear_wheel_width - 12)
