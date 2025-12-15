@@ -1,4 +1,4 @@
-{% load staticfiles static pipeline %}
+{% load static pipeline %}
 <!DOCTYPE html>
 <html>
   <head>
@@ -6,10 +6,10 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
     <title>DB Explorer{% if query %} - {{ query.title }}{% elif title %} - {{ title }}{% endif %}</title>
+    {% stylesheet 'application' %}
     <link href="//cdnjs.cloudflare.com/ajax/libs/codemirror/5.36.0/codemirror.min.css" rel="stylesheet" />
     <link href="//cdnjs.cloudflare.com/ajax/libs/pivottable/2.20.0/pivot.min.css" rel="stylesheet" />
     <link rel="stylesheet" href="{% static 'explorer/explorer.css' %}" />
-    {% stylesheet 'application' %}
     {% include 'partials/layouts/favicons.haml' %}
   </head>
   <body>

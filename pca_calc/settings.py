@@ -321,13 +321,21 @@ EXPLORER_CONNECTIONS = {'readonly': 'readonly'}
 EXPLORER_DEFAULT_CONNECTION = 'readonly'
 
 # Explorer permissions
-def explorer_view_permission(u):
-    """Check if user has permission to view SQL Explorer."""
-    return u.is_staff
+def _get_request_user(candidate):
+    """Support either a user object or a request carrying one."""
+    if hasattr(candidate, "user"):
+        return candidate.user
+    return candidate
 
-def explorer_change_permission(u):
+def explorer_view_permission(user_or_request):
+    """Check if user has permission to view SQL Explorer."""
+    user = _get_request_user(user_or_request)
+    return bool(getattr(user, "is_staff", False))
+
+def explorer_change_permission(user_or_request):
     """Check if user has permission to change SQL Explorer."""
-    return u.is_staff
+    user = _get_request_user(user_or_request)
+    return bool(getattr(user, "is_staff", False))
 
 EXPLORER_PERMISSION_VIEW = explorer_view_permission
 EXPLORER_PERMISSION_CHANGE = explorer_change_permission
