@@ -121,24 +121,26 @@ class Upgrades(models.Model):
             defs = {d.key: d for d in UpgradeDefinition.objects.all()}
         except Exception:
             defs = {}
-        for field in self._meta.get_fields():
-            if not hasattr(self, field.name):
-                continue
-            val = getattr(self, field.name)
+        
+        # Iterate over values in the JSONField instead of model fields
+        values_dict = self.values if self.values else {}
+        for key, val in values_dict.items():
             if not isinstance(val, (bool, int)):
                 continue
-            defn = defs.get(field.name)
+            
+            defn = defs.get(key)
             if defn:
                 label = defn.description or defn.label
                 points = defn.points
-                if defn.per_unit and isinstance(val, int):
+                if defn.per_unit is not None and isinstance(val, int):
                     points = math.ceil(defn.per_unit * val)
             else:
-                label = getattr(field, 'verbose_name', field.name)
+                label = key.replace('_', ' ').title()
                 points = 0
-                if field.name == 'displacement':
+                if key == 'displacement':
                     points = math.ceil(3.6 * val)
-            if field.name == 'displacement':
+            
+            if key == 'displacement':
                 if val > 0:
                     installed += f"{label}: {val}% (+{points} pts)<br>"
                 continue
@@ -146,6 +148,8 @@ class Upgrades(models.Model):
                 installed += f"{label} (+{points} pts)<br>"
             elif val is False:
                 not_installed += f"{label} ({points} pts)<br>"
+        
+        return installed + not_installed
 
     def upgrade_points(self):
         points = 0

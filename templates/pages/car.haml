@@ -32,28 +32,55 @@
                 %br
                 Wheel Widths: {{ car.front_wheel_width }}" (front) {{ car.rear_wheel_width }}" (rear)
 
-        %table.table.table-condensed
-          %thead
-            %tr
-              %th
-                %h4 Tires ({{ car.tires.last.tire_points|floatformat:1 }} pts)
-          %tbody
-            %tr
-              %td
-                Front width: {{ car.tires.last.front_section_width }} mm
-                %br
-                Rear width: {{ car.tires.last.rear_section_width }} mm
-                %br
-                Treadwear rating: {{ car.tires.last.treadwear }}
-                %br
-                DOT rated: {{ car.tires.last.dot }}
+        - if car.tires.last
+          %table.table.table-condensed
+            %thead
+              %tr
+                %th
+                  %h4 Tires ({{ car.tires.last.tire_points|floatformat:1 }} pts)
+            %tbody
+              %tr
+                %td
+                  Front width: {{ car.tires.last.front_section_width }} mm
+                  %br
+                  Rear width: {{ car.tires.last.rear_section_width }} mm
+                  %br
+                  - if car.tires.last.race_tires
+                    Tire type: Race Tires
+                  - elif car.tires.last.autox_tires
+                    Tire type: Autocross Tires
+                  - elif car.tires.last.street_tires
+                    Tire type: Street Tires
+                  - else
+                    Tire type: Not specified
+        - else
+          %table.table.table-condensed
+            %thead
+              %tr
+                %th
+                  %h4 Tires (0.0 pts)
+            %tbody
+              %tr
+                %td
+                  No tire information available
 
-        %table.table.table-condensed
-          %thead
-            %tr
-              %th
-                %h4 Upgrade Points: {{ car.upgrades.last.upgrade_points|floatformat:1 }}
-          %tbody
-            %tr
-              %td
-                {{ car.upgrades.last.upgrade_table }}
+        - if car.upgrades.last
+          %table.table.table-condensed
+            %thead
+              %tr
+                %th
+                  %h4 Upgrade Points: {{ car.upgrades.last.upgrade_points|floatformat:1 }}
+            %tbody
+              %tr
+                %td
+                  {{ car.upgrades.last.upgrade_table|safe }}
+        - else
+          %table.table.table-condensed
+            %thead
+              %tr
+                %th
+                  %h4 Upgrade Points: 0.0
+            %tbody
+              %tr
+                %td
+                  No upgrade information available
