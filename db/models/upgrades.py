@@ -115,22 +115,26 @@ class Upgrades(models.Model):
         return "<Upgrades model>"
 
     def upgrade_table(self):
-        installed = "<h5>Installed:</h5>"
-        not_installed = "<h5>Not installed:</h5>"
         try:
             defs = {d.key: d for d in UpgradeDefinition.objects.all()}
         except Exception:
             defs = {}
         
-        # Iterate over values in the JSONField instead of model fields
+        # Only collect installed upgrades
+        installed_items = []
         values_dict = self.values if self.values else {}
+        
         for key, val in values_dict.items():
             if not isinstance(val, (bool, int)):
                 continue
             
+            # Skip if not installed (False or 0)
+            if val is False or (isinstance(val, int) and val == 0):
+                continue
+            
             defn = defs.get(key)
             if defn:
-                label = defn.description or defn.label
+                label = defn.label
                 points = defn.points
                 if defn.per_unit is not None and isinstance(val, int):
                     points = math.ceil(defn.per_unit * val)
@@ -140,16 +144,16 @@ class Upgrades(models.Model):
                 if key == 'displacement':
                     points = math.ceil(3.6 * val)
             
-            if key == 'displacement':
-                if val > 0:
-                    installed += f"{label}: {val}% (+{points} pts)<br>"
-                continue
-            if val is True:
-                installed += f"{label} (+{points} pts)<br>"
-            elif val is False:
-                not_installed += f"{label} ({points} pts)<br>"
+            # Format the item with better spacing
+            if key == 'displacement' and isinstance(val, int) and val > 0:
+                installed_items.append(f"<li style='margin-bottom: 8px;'><strong>{label}:</strong> {val}% <span class='text-muted'>(+{points} pts)</span></li>")
+            elif val is True:
+                installed_items.append(f"<li style='margin-bottom: 8px;'><strong>{label}</strong> <span class='text-muted'>(+{points} pts)</span></li>")
         
-        return installed + not_installed
+        if not installed_items:
+            return "<p class='text-muted'>No upgrades installed.</p>"
+        
+        return f"<ul class='list-unstyled' style='margin-top: 10px;'>{''.join(installed_items)}</ul>"
 
     def upgrade_points(self):
         points = 0

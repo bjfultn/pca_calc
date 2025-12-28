@@ -72,7 +72,7 @@
                   %h4 Upgrade Points: {{ car.upgrades.last.upgrade_points|floatformat:1 }}
             %tbody
               %tr
-                %td
+                %td{style: "padding: 15px;"}
                   {{ car.upgrades.last.upgrade_table|safe }}
         - else
           %table.table.table-condensed
