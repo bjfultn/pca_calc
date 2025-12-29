@@ -245,6 +245,12 @@ html {
     width: 50%;
     float: left;
   }
+
+  // Add extra spacing between form fields (form.as_p renders each field as a <p> tag)
+  #car_form .form-group > p,
+  form .form-group > p {
+    margin-bottom: 1.5rem;
+  }
   
   .shaded {
       opacity: 0.5;
