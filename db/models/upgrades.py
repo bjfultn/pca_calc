@@ -115,37 +115,33 @@ class Upgrades(models.Model):
         return "<Upgrades model>"
 
     def upgrade_table(self):
-        installed = "<h5>Installed:</h5>"
-        not_installed = "<h5>Not installed:</h5>"
+        installed = []
         try:
             defs = {d.key: d for d in UpgradeDefinition.objects.all()}
         except Exception:
             defs = {}
-        for field in self._meta.get_fields():
-            if not hasattr(self, field.name):
-                continue
-            val = getattr(self, field.name)
-            if not isinstance(val, (bool, int)):
-                continue
-            defn = defs.get(field.name)
-            if defn:
-                label = defn.description or defn.label
-                points = defn.points
-                if defn.per_unit and isinstance(val, int):
-                    points = math.ceil(defn.per_unit * val)
+        
+        # Iterate over upgrade definitions to show only installed upgrades
+        for key, definition in defs.items():
+            value = self.values.get(key, False if definition.per_unit is None else 0)
+            
+            if definition.per_unit is not None:
+                # Numeric field (like displacement)
+                if value and float(value) > 0:
+                    points = math.ceil(definition.per_unit * float(value))
+                    installed.append(f"{definition.label} (+{points} pts)")
             else:
-                label = getattr(field, 'verbose_name', field.name)
-                points = 0
-                if field.name == 'displacement':
-                    points = math.ceil(3.6 * val)
-            if field.name == 'displacement':
-                if val > 0:
-                    installed += f"{label}: {val}% (+{points} pts)<br>"
-                continue
-            if val is True:
-                installed += f"{label} (+{points} pts)<br>"
-            elif val is False:
-                not_installed += f"{label} ({points} pts)<br>"
+                # Boolean field
+                if value:
+                    points = int(definition.points)
+                    installed.append(f"{definition.label} (+{points} pts)")
+        
+        if installed:
+            result = "<br>".join(installed)
+        else:
+            result = "No upgrades installed"
+        
+        return mark_safe(result)
 
     def upgrade_points(self):
         points = 0

@@ -21,6 +21,7 @@ class Car(models.Model):
         verbose_name="Enter your car's crank horsepower. This is the horsepower listed by the manufacturer (if your car is not modified). If your car is modified, assume 10% losses to convert wheel HP to crank HP as measured on a wheel dyno (preferred). If your car dyno'd at 386 whp (wheel horsepower) --> 386*1.10 = 424.6 crank hp --> enter 425. Note: Be prepared to show your dyno results if a fellow competitor asks.\n\nCrank Horsepower:")
     front_wheel_width = models.FloatField(null=True, verbose_name="To measure wheel width, find the measurement on the wheel's stamp (often XXJ, where XX is the width in inches).  This is the value wheel manufacturers advertise as the wheel width.  Alternatively, you can manually measure the distance between the two bead seats (the inner lips where the tire sits) with a tape measure or straight edge and a ruler. This 'bead seat to bead seat' measurement is the official rim width and will be roughly 1 inch less than the total outer width of the wheel.\n\nFront wheel width [in]:")
     rear_wheel_width = models.FloatField(null=True, verbose_name="Rear wheel width [in]")
+    last_updated = models.DateTimeField(null=True, blank=True, auto_now=False, verbose_name="Last Updated")
     # picture = models.ImageField(upload_to="./avatars/", blank=True)
 
     def __str__(self):

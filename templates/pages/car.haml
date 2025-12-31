@@ -14,6 +14,9 @@
         %p
           %h3  
             Class: {{ car.class_name }}
+        - if car.last_updated
+          %p
+            Last Updated: {{ car.last_updated|date:"Y-m-d H:i" }}
     .row
       .col-md-10.offset-md-1.user_login_page
         %table.table.table-condensed
@@ -44,9 +47,14 @@
                 %br
                 Rear width: {{ car.tires.last.rear_section_width }} mm
                 %br
-                Treadwear rating: {{ car.tires.last.treadwear }}
-                %br
-                DOT rated: {{ car.tires.last.dot }}
+                - if car.tires.last.race_tires
+                  Race tires (CCR)
+                - elif car.tires.last.autox_tires
+                  Autox tires (+20 pts)
+                - elif car.tires.last.street_tires
+                  Street tires (+0 pts)
+                - else
+                  No tire type selected
 
         %table.table.table-condensed
           %thead

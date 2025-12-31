@@ -33,6 +33,42 @@ function classColumnSorter(a, b, aRow, bRow, column, dir, sorterParams) {
   return aNumber - bNumber;
 }
 
+function datetimeColumnSorter(a, b, aRow, bRow, column, dir, sorterParams) {
+  var alignEmptyValues = sorterParams && sorterParams.alignEmptyValues ? sorterParams.alignEmptyValues : "bottom";
+  var emptyAlign = 0;
+
+  if (typeof moment != "undefined") {
+    // Parse ISO format (handles both with and without microseconds)
+    var aMoment = a ? moment(a) : null;
+    var bMoment = b ? moment(b) : null;
+
+    if (!aMoment || !aMoment.isValid()) {
+      emptyAlign = !bMoment || !bMoment.isValid() ? 0 : -1;
+    } else if (!bMoment || !bMoment.isValid()) {
+      emptyAlign = 1;
+    } else {
+      // Compare valid values
+      return aMoment - bMoment;
+    }
+
+    // Fix empty values position
+    if (alignEmptyValues === "top" && dir === "desc" || alignEmptyValues === "bottom" && dir === "asc") {
+      emptyAlign *= -1;
+    }
+
+    return emptyAlign;
+  } else {
+    // Fallback to string comparison if moment.js is not available
+    if (!a) {
+      return !b ? 0 : (dir === "asc" ? 1 : -1);
+    }
+    if (!b) {
+      return dir === "asc" ? -1 : 1;
+    }
+    return a.localeCompare(b);
+  }
+}
+
 function competitionTableColumns() {
   return [
         {field: "id", title: "ID", visible: false, sorterParams: {alignEmptyValues: "bottom"}},
@@ -45,5 +81,6 @@ function competitionTableColumns() {
         {field: "upgrade_points", title: "Upgrade Points", formatter:floatFormat, sorterParams:{alignEmptyValues:"bottom"}, formatterParams: {precision: 0}},
         {field: "total_points", title: "Total Points", formatter:floatFormat, sorterParams:{alignEmptyValues:"bottom"}, formatterParams: {precision: 0}},
         {field: "class", title: "Class", sorter:classColumnSorter, sorterParams: {alignEmptyValues: "bottom"}},
+        {field: "last_updated", title: "Last Updated", sorter:datetimeColumnSorter, sorterParams: {alignEmptyValues: "bottom"}, formatter:"datetime", formatterParams:{inputFormat:"YYYY-MM-DDTHH:mm:ss", outputFormat:"YYYY-MM-DD HH:mm", invalidPlaceholder:"—"}},
       ]
 }

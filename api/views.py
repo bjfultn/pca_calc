@@ -89,7 +89,8 @@ def competition(request):
                 'upgrade_points': upgrade_points,
                 'total_points': total_points,
                 'class': class_name,
-                'class_sort': class_sort
+                'class_sort': class_sort,
+                'last_updated': car.last_updated.isoformat() if car.last_updated else None
             })
             dict_time += ostime.time() - dict_start
     
