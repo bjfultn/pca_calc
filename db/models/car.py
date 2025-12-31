@@ -72,7 +72,7 @@ class Car(models.Model):
 class CarCreateForm(forms.ModelForm):
     class Meta:
         model = Car
-        exclude = ['user']
+        exclude = ['user', 'last_updated']
     
     def clean_weight(self):
         content = self.cleaned_data['weight']
