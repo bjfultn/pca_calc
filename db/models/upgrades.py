@@ -82,17 +82,21 @@ class Upgrades(models.Model):
 
     def __getattr__(self, name):
         upgrade_defs = object.__getattribute__(self, '_upgrade_defs')
-        if name in upgrade_defs:
-            return self.values.get(name, False if upgrade_defs[name].per_unit is None else 0)
+        name_lower = name.lower()
+        if name_lower in upgrade_defs:
+            value = self._get_value_case_insensitive(name)
+            if value is None:
+                definition = upgrade_defs[name_lower]
+                return False if definition.per_unit is None else 0
+            return value
         return super().__getattribute__(name)
 
     def __setattr__(self, name, value):
         if name != '_upgrade_defs':
             upgrade_defs = object.__getattribute__(self, '_upgrade_defs')
-            if name in upgrade_defs:
-                if self.values is None:
-                    self.values = {}
-                self.values[name] = value
+            name_lower = name.lower()
+            if name_lower in upgrade_defs:
+                self._set_value_case_insensitive(name, value)
                 return
         super().__setattr__(name, value)
 
@@ -102,11 +106,38 @@ class Upgrades(models.Model):
             return object.__getattribute__(self, '_cached_defs')
         except AttributeError:
             try:
-                cached_defs = {d.key: d for d in UpgradeDefinition.objects.all()}
+                # Use lowercase keys for case-insensitive matching
+                cached_defs = {d.key.lower(): d for d in UpgradeDefinition.objects.all()}
             except Exception:
                 cached_defs = {}
             object.__setattr__(self, '_cached_defs', cached_defs)
             return cached_defs
+
+    def _get_value_case_insensitive(self, key):
+        """Get value from self.values using case-insensitive key lookup."""
+        if not self.values:
+            return None
+        # First try exact match (fast path)
+        if key in self.values:
+            return self.values[key]
+        # Then try case-insensitive lookup
+        key_lower = key.lower()
+        for stored_key, value in self.values.items():
+            if stored_key.lower() == key_lower:
+                return value
+        return None
+
+    def _set_value_case_insensitive(self, key, value):
+        """Set value in self.values, normalizing key to lowercase."""
+        if self.values is None:
+            self.values = {}
+        # Normalize key to lowercase for consistency
+        key_lower = key.lower()
+        # If a case variant exists, remove it first
+        keys_to_remove = [k for k in self.values.keys() if k.lower() == key_lower and k != key_lower]
+        for k in keys_to_remove:
+            del self.values[k]
+        self.values[key_lower] = value
 
     def __str__(self):
         return "Upgrade points: {}".format(self.upgrade_points())
@@ -117,13 +148,15 @@ class Upgrades(models.Model):
     def upgrade_table(self):
         installed = []
         try:
-            defs = {d.key: d for d in UpgradeDefinition.objects.all()}
+            defs = {d.key.lower(): d for d in UpgradeDefinition.objects.all()}
         except Exception:
             defs = {}
         
         # Iterate over upgrade definitions to show only installed upgrades
-        for key, definition in defs.items():
-            value = self.values.get(key, False if definition.per_unit is None else 0)
+        for key_lower, definition in defs.items():
+            value = self._get_value_case_insensitive(definition.key)
+            if value is None:
+                value = False if definition.per_unit is None else 0
             
             if definition.per_unit is not None:
                 # Numeric field (like displacement)
@@ -145,8 +178,10 @@ class Upgrades(models.Model):
 
     def upgrade_points(self):
         points = 0
-        for key, definition in self._upgrade_defs.items():
-            value = self.values.get(key, False if definition.per_unit is None else 0)
+        for key_lower, definition in self._upgrade_defs.items():
+            value = self._get_value_case_insensitive(definition.key)
+            if value is None:
+                value = False if definition.per_unit is None else 0
             if definition.per_unit is not None:
                 try:
                     points += math.ceil(definition.per_unit * float(value))
@@ -177,8 +212,10 @@ class UpgradesCreateForm(forms.ModelForm):
         except Exception:
             definitions = []
         for definition in definitions:
-            field_value = (instance.values.get(definition.key, False)
+            field_value = (instance._get_value_case_insensitive(definition.key)
                          if instance and instance.values else False)
+            if field_value is None:
+                field_value = False
             if definition.per_unit is not None:
                 self.fields[definition.key] = forms.IntegerField(
                     label=definition.description,
@@ -201,7 +238,8 @@ class UpgradesCreateForm(forms.ModelForm):
         values = {}
         for key in list(cleaned_data.keys()):
             if key != 'values':
-                values[key] = cleaned_data.pop(key)
+                # Normalize key to lowercase
+                values[key.lower()] = cleaned_data.pop(key)
         cleaned_data['values'] = values
         return cleaned_data
 # --- END: Restore UpgradesCreateForm for new system ---
