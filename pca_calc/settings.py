@@ -11,6 +11,7 @@ https://docs.djangoproject.com/en/2.1/ref/settings/
 """
 
 import os
+import ssl
 from decouple import config
 from django.contrib.messages import constants as messages
 from helpers.common import server_env
@@ -241,6 +242,9 @@ CACHES = {
         "LOCATION": redis1,
         "OPTIONS": {
             "CLIENT_CLASS": "django_redis.client.DefaultClient",
+            "CONNECTION_POOL_KWARGS": {
+                "ssl_cert_reqs": ssl.CERT_NONE,
+            },
         }
     },
     "select2": {
@@ -248,6 +252,9 @@ CACHES = {
         "LOCATION": redis2,
         "OPTIONS": {
             "CLIENT_CLASS": "django_redis.client.DefaultClient",
+            "CONNECTION_POOL_KWARGS": {
+                "ssl_cert_reqs": ssl.CERT_NONE,
+            },
         }
     }
 }
