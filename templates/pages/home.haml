@@ -13,7 +13,9 @@
         - if user.is_authenticated
           .col-md-12
             %h5.statbanner
-              Welcome {{ request.user.first_name }}!
+              Welcome to the PCA LA Autocross Car Classification site!
+              %br
+              You are logged in as {{ request.user.first_name }}.
           .row.cards
             .col-md-auto
               .card
@@ -46,7 +48,7 @@
         - else
           .col-md-12
             %h5.statbanner
-              Welcome!
+              Welcome to the PCA LA Autocross Car Classification site!
           .row.cards
             .col-md-6
               .card

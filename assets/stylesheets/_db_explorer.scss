@@ -1,13 +1,68 @@
 .db_explorer {
-  padding: 0 0 20px;
+  padding: 20px 0;
   min-height: 640px;
   .navbar {
     margin-bottom: 20px;
   }
+  .container {
+    max-width: 100%;
+    width: 100%;
+    
+    .starter-template {
+      padding-top: 20px;
+      width: 100%;
+      max-width: 100%;
+    }
+  }
+  
+  // Ensure query form is full width
+  #query-form,
+  form {
+    width: 100%;
+    max-width: 100%;
+  }
   .hidden {
     display: none;
   }
+  
+  // Style all form elements
+  label {
+    display: block;
+    margin-bottom: 0.5rem;
+    font-weight: 600;
+  }
+  
+  input[type="text"],
+  input[type="number"],
+  textarea,
+  select,
+  .form-control {
+    display: block;
+    width: 100% !important;
+    max-width: 100% !important;
+    padding: 0.375rem 0.75rem;
+    font-size: 1rem;
+    line-height: 1.5;
+    color: #495057;
+    background-color: #fff;
+    background-clip: padding-box;
+    border: 1px solid #ced4da;
+    border-radius: 0.25rem;
+    transition: border-color 0.15s ease-in-out, box-shadow 0.15s ease-in-out;
+    &:focus {
+      color: #495057;
+      background-color: #fff;
+      border-color: #80bdff;
+      outline: 0;
+      box-shadow: 0 0 0 0.2rem rgba(0, 123, 255, 0.25);
+    }
+  }
+  
   .form-group {
+    margin-bottom: 1.5rem;
+    width: 100%;
+    max-width: 100%;
+    
     .col-sm-10,
     .control-label {
       width: 100%;
@@ -17,9 +72,73 @@
     .text-center {
       text-align: left !important;
     }
+    
+    // Ensure form controls inside form groups are full width
+    input,
+    textarea,
+    select {
+      width: 100% !important;
+      max-width: 100% !important;
+    }
   }
+  
+  // Select2 dropdown styling
+  .select2-container {
+    width: 100% !important;
+    .select2-selection {
+      border: 1px solid #ced4da;
+      border-radius: 0.25rem;
+      min-height: calc(1.5em + 0.75rem + 2px);
+      padding: 0.375rem 0.75rem;
+    }
+  }
+  
+  // Form actions/buttons area
+  .form-actions,
+  .submit-row {
+    margin-top: 1.5rem;
+    padding-top: 1rem;
+    border-top: 1px solid #dee2e6;
+  }
+  
+  // SQL panel and label styling
   .sql-panel {
     margin-bottom: 20px;
+  }
+  
+  // Remove button styling from SQL label/toggle
+  label[for="id_sql"],
+  .sql-label,
+  #sql-toggle,
+  button.sql-toggle {
+    display: block;
+    margin-bottom: 0.5rem;
+    font-weight: 600;
+    background: none !important;
+    border: none !important;
+    padding: 0 !important;
+    cursor: default;
+    text-align: left;
+    color: inherit;
+    box-shadow: none !important;
+    
+    &:hover,
+    &:focus {
+      background: none !important;
+      border: none !important;
+      box-shadow: none !important;
+      text-decoration: none;
+    }
+  }
+  
+  // CodeMirror editor styling
+  .CodeMirror {
+    border: 1px solid #ced4da;
+    border-radius: 0.25rem;
+    height: auto;
+    min-height: 200px;
+    font-family: $font-family-monospace;
+    font-size: 14px;
   }
   #queries {
     .table {
@@ -46,14 +165,31 @@
     }
   }
   .btn {
+    display: inline-block;
+    font-weight: 400;
+    text-align: center;
+    white-space: nowrap;
+    vertical-align: middle;
+    user-select: none;
+    border: 1px solid transparent;
+    padding: 0.375rem 0.75rem;
+    font-size: 1rem;
+    line-height: 1.5;
+    border-radius: 0.25rem;
+    transition: color 0.15s ease-in-out, background-color 0.15s ease-in-out, border-color 0.15s ease-in-out, box-shadow 0.15s ease-in-out;
+    margin-right: 0.5rem;
+    margin-bottom: 0.5rem;
     color: #212529;
     background-color: #f8f9fa;
     border-color: #f8f9fa;
-    margin: 0px;
+    cursor: pointer;
     &:hover {
       color: #212529;
       background-color: #e2e6ea;
       border-color: #dae0e5;
+    }
+    &:focus {
+      box-shadow: 0 0 0 0.2rem rgba(248, 249, 250, 0.5);
     }
   }
   .dropdown-menu {
@@ -168,6 +304,63 @@
         }
       }
     }
+  }
+
+  // Make query results table scrollable horizontally
+  .preview-table-wrapper,
+  .table-wrapper,
+  .panel-body {
+    overflow-x: auto;
+    overflow-y: visible;
+    width: 100%;
+    margin-bottom: 1rem;
+    -webkit-overflow-scrolling: touch; // Smooth scrolling on iOS
+    
+    table {
+      min-width: 100%;
+      white-space: nowrap;
+      
+      th, td {
+        padding: 0.5rem;
+        white-space: nowrap;
+      }
+    }
+  }
+  
+  // Additional styling for query results
+  #preview, #pivot {
+    overflow-x: auto;
+    overflow-y: visible;
+    width: 100%;
+    -webkit-overflow-scrolling: touch;
+    
+    .table {
+      margin-bottom: 0;
+      font-size: 0.9rem;
+      
+      thead th {
+        background-color: #343a40;
+        color: #fff;
+        font-weight: 600;
+        position: sticky;
+        top: 0;
+        z-index: 10;
+      }
+      
+      tbody tr:nth-of-type(odd) {
+        background-color: rgba(0, 0, 0, 0.05);
+      }
+      
+      tbody tr:hover {
+        background-color: rgba(0, 123, 255, 0.1);
+      }
+    }
+  }
+  
+  // Ensure the tab content allows horizontal scroll
+  .tab-content {
+    overflow-x: auto;
+    width: 100%;
   }
 }
 

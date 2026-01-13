@@ -1,9 +1,44 @@
 .home {
   .splash {
-    background: url('/static/images/porsche-911-rsr-4k.jpg') center center no-repeat #000;
-    background-size: cover;
+    position: relative;
+    overflow: hidden;
+    min-height: 500px;
     box-shadow: inset 0px 0px 30px #000;
-    min-height: 400px;
+    background: #000;
+
+    &::before,
+    &::after {
+      content: "";
+      position: absolute;
+      inset: 0;
+      background: url('/static/images/banner.jpg') center center no-repeat;
+      pointer-events: none;
+    }
+
+    &::before {
+      background-size: cover;
+      filter: blur(30px);
+      transform: scale(1.1);
+      z-index: 0;
+    }
+
+    &::after {
+      background-size: contain;
+      background-position: center bottom;
+      z-index: 1;
+    }
+
+    @media (max-width: 768px) {
+      &::after {
+        background-size: cover;
+      }
+    }
+
+    .container {
+      position: relative;
+      z-index: 2;
+    }
+
     .title {
       margin: 200px 0 60px;
       color: #fff;

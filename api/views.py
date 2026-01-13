@@ -68,6 +68,13 @@ def competition(request):
                     right = mid - 1
                 else:
                     left = mid + 1
+            if class_name.startswith('CC'):
+                class_sort = int(class_name[2:])
+            else:
+                class_sort = -1
+            if car.tires.last().race_tires:
+                class_name = car.class_name()
+                class_sort += 100
             class_time += ostime.time() - class_start
             
             dict_start = ostime.time()
@@ -81,7 +88,9 @@ def competition(request):
                 'tire_points': tire_points,
                 'upgrade_points': upgrade_points,
                 'total_points': total_points,
-                'class': class_name
+                'class': class_name,
+                'class_sort': class_sort,
+                'last_updated': car.last_updated.isoformat() if car.last_updated else None
             })
             dict_time += ostime.time() - dict_start
     

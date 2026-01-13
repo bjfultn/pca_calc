@@ -5,8 +5,10 @@ USER root
 ENV TZ=America/Los_Angeles
 RUN ln -snf /usr/share/zoneinfo/$TZ /etc/localtime && echo $TZ > /etc/timezone && \
     apt-get --yes update && \
-    apt-get install -y wget build-essential nodejs npm rsync && \
-    npm install -g --yes yuglify cssmin uglify-es && \
+    apt-get install -y wget build-essential curl rsync && \
+    curl -fsSL https://deb.nodesource.com/setup_18.x | bash - && \
+    apt-get install -y nodejs && \
+    npm install -g --yes yuglify cssmin uglify-es sass && \
     wget https://repo.anaconda.com/miniconda/Miniconda3-py39_23.11.0-2-Linux-x86_64.sh && \
     bash Miniconda3-py39_23.11.0-2-Linux-x86_64.sh -b
 

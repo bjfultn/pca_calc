@@ -1,4 +1,3 @@
-
 import math
 import django
 from django import forms
@@ -9,67 +8,136 @@ from django.utils.safestring import mark_safe
 from logger import log
 from pca_calc import settings
 
+# Default hard-coded points (used as fallback if DB definitions aren't available)
+DEFAULT_UPGRADE_POINTS = {
+    'mid_engine': 15,
+    'traction_control': 10,
+    'induction': 40,
+    'engine_head': 50,
+    'camshaft': 50,
+    'forced_induction': 150,
+    'boost': 100,
+    # displacement handled specially (per-unit multiplier fallback)
+    'muffler': 5,
+    'cats': 5,
+    'headers': 5,
+    'differential': 20,
+    'final_drive': 40,
+    'pdk': 15,
+    'shocks': 20,
+    'shock_tower': 10,
+    'factory_springs': 15,
+    'aftermarket_springs': 30,
+    'fixed_sway': 10,
+    'adj_sway': 20,
+    'custom_suspension': 10,
+    'camber': 20,
+    'spherical_bearings': 10,
+    'tube_frame': 100,
+    'factory_aero': 10,
+    'oem_aero': 20,
+    'aftermarket_aero': 40,
+    'windshield_delete': 60,
+    'brakes': 20,
+}
+
+
+class UpgradeDefinition(models.Model):
+    """Editable definitions for each upgrade type.
+
+    key: matches the field name on `Upgrades` (e.g. 'mid_engine').
+    points: fixed points to apply when the boolean is True.
+    per_unit: if set, used for numeric fields like `displacement` as
+        `ceil(per_unit * value)`.
+    """
+    key = models.CharField(max_length=64, unique=True)
+    label = models.CharField(max_length=200)
+    description = models.TextField(blank=True)
+    points = models.FloatField(default=0)
+    per_unit = models.FloatField(null=True, blank=True)
+    order = models.IntegerField(default=0)
+
+    class Meta:
+        ordering = ['order', 'key']
+
+    def __str__(self):
+        return f"{self.label} ({self.key})"
+
+
+    class Meta:
+        ordering = ['order', 'key']
+
+        def __str__(self):
+                return f"{self.label} ({self.key})"
+
+
+# --- BEGIN: Restore new Upgrades model with JSONField ---
 class Upgrades(models.Model):
-    car = models.ForeignKey('Car', on_delete=models.CASCADE, related_name="upgrades",
-                             blank=True, null=True)
-    mid_engine = models.BooleanField(default=False,
-        verbose_name="Is your car mid-engine or all electric? (15 points)")
-    traction_control = models.BooleanField(default=False,
-        verbose_name="Electronically adjustable shocks and/or active suspension, including PASM (10 points)")
-    induction = models.BooleanField(default=False,
-        verbose_name="Induction system modifications (e.g. upgrade carbs to fuel injection) (40 points)")
-    engine_head = models.BooleanField(default=False,
-        verbose_name="Non-stock heads (e.g. port/polish, compression changes) (50 points)")
-    camshaft = models.BooleanField(default=False,
-        verbose_name="Non-stock camshaft (50 points)")
-    forced_induction = models.BooleanField(default=False,
-        verbose_name="Added a turbo or supercharger? (150 points)")
-    boost = models.BooleanField(default=False,
-        verbose_name="Increased or adjustable boost, or modifications to the wastegate or turbocharger (100 points)")
-    displacement = models.IntegerField(default=0,
-        verbose_name="Is the engine displacement larger than stock? If yes, by what percentage? (0=no increase, 100=doubled displacement) (36 x fractional increase points")
-    muffler = models.BooleanField(default=False,
-        verbose_name="Upgraded or deleted muffler (5 points)")
-    cats = models.BooleanField(default=False,
-        verbose_name="Deleted catalytic converter (5 points)")
-    headers = models.BooleanField(default=False,
-        verbose_name="Non-stock exhaust manifold or headers (5 points)")
-    differential = models.BooleanField(default=False,
-        verbose_name="Does your car have a stock/aftermarket LSD or AWD? (20 points)")
-    final_drive = models.BooleanField(default=False,
-        verbose_name="Non-stock final drive ratio (40 points)")
-    pdk = models.BooleanField(default=False,
-        verbose_name="Is your car an EV or does your car have a PDK, dual clutch, or sequential transmission? (15 points)")
-    shocks = models.BooleanField(default=False,
-        verbose_name="Non-stock shocks with external reservoirs or 2+ way adjustability (20 points)")
-    shock_tower = models.BooleanField(default=False,
-        verbose_name="Non-stock shock tower brace (10 point)")
-    factory_springs = models.BooleanField(default=False,
-        verbose_name="Non-stock factory springs (within the same series) (15  points)")
-    aftermarket_springs = models.BooleanField(default=False,
-        verbose_name="Aftermarket springs or factory springs from a different model series. (30 points)")
-    fixed_sway = models.BooleanField(default=False,
-        verbose_name="Non-stock non-adjustable sway bar(s) (10 points)")
-    adj_sway = models.BooleanField(default=False,
-        verbose_name="Non-stock adjustable sway bar(s) (20 points)")
-    custom_suspension = models.BooleanField(default=False,
-        verbose_name="Suspension changes to lower a car that require machining, welding, etc. or their equivalent. (10 points)")
-    camber = models.BooleanField(default=False,
-        verbose_name="Any change to the suspension components or mounting points to increase available negative camber (20 points)")
-    spherical_bearings = models.BooleanField(default=False,
-        verbose_name="Installation of “Monoball” suspension bushings or equivalent 10 (points)")
-    tube_frame = models.BooleanField(default=False,
-        verbose_name="Tube frame chassis (100 points)")
-    factory_aero = models.BooleanField(default=False,
-        verbose_name="Non-stock aero devices that came from another car within the same model series. (10 points)")
-    oem_aero = models.BooleanField(default=False,
-        verbose_name="Non-stock aero devices that came from another car not within the same model series. (20 points)")
-    aftermarket_aero = models.BooleanField(default=False,
-        verbose_name="Any aftermarket aero devices. (40 points)")
-    windshield_delete = models.BooleanField(default=False,
-        verbose_name="Removal or alteration of windshield (other than replacement with lighter weight materials) (60 points)")
-    brakes = models.BooleanField(default=False,
-        verbose_name="Brake Upgrades (other than drilled/gas slotted stock rotors, brake pads, master cylinder, or aftermarket rotors with no increase in diameter). Includes factory or post-delivery installation of ceramic brakes (20 points)")
+    car = models.ForeignKey('Car', on_delete=models.CASCADE, related_name="upgrades", blank=True, null=True)
+    values = models.JSONField(default=dict, help_text="Stores upgrade values as {key: value}")
+
+    class Meta:
+        verbose_name = "Car Upgrades"
+        verbose_name_plural = "Car Upgrades"
+
+    def __getattr__(self, name):
+        upgrade_defs = object.__getattribute__(self, '_upgrade_defs')
+        name_lower = name.lower()
+        if name_lower in upgrade_defs:
+            value = self._get_value_case_insensitive(name)
+            if value is None:
+                definition = upgrade_defs[name_lower]
+                return False if definition.per_unit is None else 0
+            return value
+        return super().__getattribute__(name)
+
+    def __setattr__(self, name, value):
+        if name != '_upgrade_defs':
+            upgrade_defs = object.__getattribute__(self, '_upgrade_defs')
+            name_lower = name.lower()
+            if name_lower in upgrade_defs:
+                self._set_value_case_insensitive(name, value)
+                return
+        super().__setattr__(name, value)
+
+    @property
+    def _upgrade_defs(self):
+        try:
+            return object.__getattribute__(self, '_cached_defs')
+        except AttributeError:
+            try:
+                # Use lowercase keys for case-insensitive matching
+                cached_defs = {d.key.lower(): d for d in UpgradeDefinition.objects.all()}
+            except Exception:
+                cached_defs = {}
+            object.__setattr__(self, '_cached_defs', cached_defs)
+            return cached_defs
+
+    def _get_value_case_insensitive(self, key):
+        """Get value from self.values using case-insensitive key lookup."""
+        if not self.values:
+            return None
+        # First try exact match (fast path)
+        if key in self.values:
+            return self.values[key]
+        # Then try case-insensitive lookup
+        key_lower = key.lower()
+        for stored_key, value in self.values.items():
+            if stored_key.lower() == key_lower:
+                return value
+        return None
+
+    def _set_value_case_insensitive(self, key, value):
+        """Set value in self.values, normalizing key to lowercase."""
+        if self.values is None:
+            self.values = {}
+        # Normalize key to lowercase for consistency
+        key_lower = key.lower()
+        # If a case variant exists, remove it first
+        keys_to_remove = [k for k in self.values.keys() if k.lower() == key_lower and k != key_lower]
+        for k in keys_to_remove:
+            del self.values[k]
+        self.values[key_lower] = value
 
     def __str__(self):
         return "Upgrade points: {}".format(self.upgrade_points())
@@ -78,57 +146,100 @@ class Upgrades(models.Model):
         return "<Upgrades model>"
 
     def upgrade_table(self):
-        installed = "<h5>Installed:</h5>"
-        not_installed = "<h5>Not installed:</h5>"
-        for field in self._meta.get_fields():
-            if getattr(self, field.name) == True:
-                installed += field.verbose_name + "<br>"
-            elif getattr(self, field.name) == False:
-                not_installed += field.verbose_name + "<br>"
-
-        output = installed + "<br>" + not_installed
-        return mark_safe(output)
+        installed = []
+        try:
+            defs = {d.key.lower(): d for d in UpgradeDefinition.objects.all()}
+        except Exception:
+            defs = {}
+        
+        # Iterate over upgrade definitions to show only installed upgrades
+        for key_lower, definition in defs.items():
+            value = self._get_value_case_insensitive(definition.key)
+            if value is None:
+                value = False if definition.per_unit is None else 0
+            
+            if definition.per_unit is not None:
+                # Numeric field (like displacement)
+                if value and float(value) > 0:
+                    points = math.ceil(definition.per_unit * float(value))
+                    installed.append(f"{definition.label} (+{points} pts)")
+            else:
+                # Boolean field
+                if value:
+                    points = int(definition.points)
+                    installed.append(f"{definition.label} (+{points} pts)")
+        
+        if installed:
+            result = "<br>".join(installed)
+        else:
+            result = "No upgrades installed"
+        
+        return mark_safe(result)
 
     def upgrade_points(self):
-        tp = 15*self.mid_engine
-        tp += 10*self.traction_control
-        tp += 40*self.induction
-        tp += 50*self.engine_head
-        tp += 50*self.camshaft
-        tp += 150*self.forced_induction
-        tp += 100*self.boost
-        tp += math.ceil(3.6*self.displacement)
-        tp += 5*self.muffler
-        tp += 5*self.cats
-        tp += 5*self.headers
-        tp += 20*self.differential
-        tp += 40*self.final_drive
-        tp += 15*self.pdk
-        tp += 20*self.shocks
-        tp += 10*self.shock_tower
-        tp += 15*self.factory_springs
-        tp += 30*self.aftermarket_springs
-        tp += 10*self.fixed_sway
-        tp += 20*self.adj_sway
-        tp += 10*self.custom_suspension
-        tp += 20*self.camber
-        tp += 10*self.spherical_bearings
-        tp += 100*self.tube_frame
-        tp += 10*self.factory_aero
-        tp += 20*self.oem_aero
-        tp += 40*self.aftermarket_aero
-        tp += 60*self.windshield_delete
-        tp += 20*self.brakes
+        points = 0
+        for key_lower, definition in self._upgrade_defs.items():
+            value = self._get_value_case_insensitive(definition.key)
+            if value is None:
+                value = False if definition.per_unit is None else 0
+            if definition.per_unit is not None:
+                try:
+                    points += math.ceil(definition.per_unit * float(value))
+                except (TypeError, ValueError):
+                    pass
+            else:
+                try:
+                    points += int(definition.points) * int(bool(value))
+                except (TypeError, ValueError):
+                    pass
+        return points
+# --- END: Restore new Upgrades model with JSONField ---
 
-        return tp
-    
 
+# --- BEGIN: Restore UpgradesCreateForm for new system ---
 class UpgradesCreateForm(forms.ModelForm):
+    def save(self, commit=True):
+        self.instance.values = self.cleaned_data['values']
+        return super().save(commit=commit)
     class Meta:
         model = Upgrades
-        exclude = ['car']
-    
+        fields = []
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)
-        for field in self.fields:
-            self.fields[field].widget.attrs['class'] = 'form-control'
+        instance = kwargs.get('instance')
+        try:
+            definitions = UpgradeDefinition.objects.all().order_by('order', 'key')
+        except Exception:
+            definitions = []
+        for definition in definitions:
+            field_value = (instance._get_value_case_insensitive(definition.key)
+                         if instance and instance.values else False)
+            if field_value is None:
+                field_value = False
+            if definition.per_unit is not None:
+                self.fields[definition.key] = forms.IntegerField(
+                    label=definition.description,
+                    help_text=f"Points: {definition.per_unit} × value",
+                    required=False,
+                    initial=field_value,
+                    min_value=0,
+                    max_value=100
+                )
+            else:
+                self.fields[definition.key] = forms.BooleanField(
+                    label=definition.description,
+                    help_text=f"Points: {int(definition.points)}",
+                    required=False,
+                    initial=field_value
+                )
+            self.fields[definition.key].widget.attrs['class'] = 'form-control'
+    def clean(self):
+        cleaned_data = super().clean()
+        values = {}
+        for key in list(cleaned_data.keys()):
+            if key != 'values':
+                # Normalize key to lowercase
+                values[key.lower()] = cleaned_data.pop(key)
+        cleaned_data['values'] = values
+        return cleaned_data
+# --- END: Restore UpgradesCreateForm for new system ---

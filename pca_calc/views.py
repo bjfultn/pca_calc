@@ -75,9 +75,9 @@ def edit_tire(request, carid):
     tires = car.tires.last()
     if request.method == 'POST':
         form = TireCreateForm(request.POST, request.FILES, instance=tires)
-        tires = form.save()
-
-        return redirect(request.path)
+        if form.is_valid():
+            form.save()
+            return redirect(request.path)
     else:        
         form = TireCreateForm(instance=tires)
 
@@ -91,9 +91,10 @@ def edit_upgrades(request, carid):
     upgrades = car.upgrades.all().last()
     if request.method == 'POST':
         form = UpgradesCreateForm(request.POST, request.FILES, instance=upgrades)
-        upgrades = form.save()
-
-        return redirect(request.path)
+        if form.is_valid():
+            upgrades = form.save()
+            return redirect(request.path)
+        # If not valid, fall through to render form with errors
     else:        
         form = UpgradesCreateForm(instance=upgrades)
 

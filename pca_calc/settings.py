@@ -11,6 +11,7 @@ https://docs.djangoproject.com/en/2.1/ref/settings/
 """
 
 import os
+import ssl
 from decouple import config
 from django.contrib.messages import constants as messages
 from helpers.common import server_env
@@ -25,7 +26,7 @@ BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 SECRET_KEY = config('SECRET_KEY', default='your-secret-key-here')
 
 LANGUAGE_CODE = 'en-us'
-TIME_ZONE = 'US/Pacific'
+TIME_ZONE = 'America/Los_Angeles'
 # TIME_ZONE = 'UTC'
 USE_I18N = True
 USE_L10N = True
@@ -139,7 +140,7 @@ PIPELINE = {
     'JS_COMPRESSOR': 'pipeline.compressors.uglifyjs.UglifyJSCompressor',
     'CSS_COMPRESSOR': 'pipeline.compressors.yuglify.YuglifyCompressor',
     'COMPILERS': (
-        'libsasscompiler.LibSassCompiler',
+        'pipeline.compilers.sass.SASSCompiler',
     ),
     'STYLESHEETS': {
         'application': {
@@ -241,6 +242,9 @@ CACHES = {
         "LOCATION": redis1,
         "OPTIONS": {
             "CLIENT_CLASS": "django_redis.client.DefaultClient",
+            "CONNECTION_POOL_KWARGS": {
+                "ssl_cert_reqs": ssl.CERT_NONE,
+            },
         }
     },
     "select2": {
@@ -248,6 +252,9 @@ CACHES = {
         "LOCATION": redis2,
         "OPTIONS": {
             "CLIENT_CLASS": "django_redis.client.DefaultClient",
+            "CONNECTION_POOL_KWARGS": {
+                "ssl_cert_reqs": ssl.CERT_NONE,
+            },
         }
     }
 }
@@ -321,13 +328,21 @@ EXPLORER_CONNECTIONS = {'readonly': 'readonly'}
 EXPLORER_DEFAULT_CONNECTION = 'readonly'
 
 # Explorer permissions
-def explorer_view_permission(u):
-    """Check if user has permission to view SQL Explorer."""
-    return u.is_staff
+def _get_request_user(candidate):
+    """Support either a user object or a request carrying one."""
+    if hasattr(candidate, "user"):
+        return candidate.user
+    return candidate
 
-def explorer_change_permission(u):
+def explorer_view_permission(user_or_request):
+    """Check if user has permission to view SQL Explorer."""
+    user = _get_request_user(user_or_request)
+    return bool(getattr(user, "is_staff", False))
+
+def explorer_change_permission(user_or_request):
     """Check if user has permission to change SQL Explorer."""
-    return u.is_staff
+    user = _get_request_user(user_or_request)
+    return bool(getattr(user, "is_staff", False))
 
 EXPLORER_PERMISSION_VIEW = explorer_view_permission
 EXPLORER_PERMISSION_CHANGE = explorer_change_permission

@@ -9,7 +9,19 @@
     .content
       .container
         .row
+         .col-md-12
+            %h5.statbanner
+              My Garage
         .row.cards
+          .card
+            .card-header New Car
+            .card-body
+              %p
+                Add a new car to your garage.
+              %a.btn.btn-success.float-right{href: "/garage/add"}
+                Create
+                %i.fa.fa-plus
+
           - for car in cars
             .col-md-auto
               .card
@@ -28,13 +40,3 @@
                   %a.btn.btn-secondary.float-right{href: "/garage/edit/{{ car.id }}"}
                     Edit
                     %i.fa.fa-arrow-right
-        .row.cards
-          .col-md-auto
-            .card
-              .card-header New Car
-              .card-body
-                %p
-                  Add a new car to your garage.
-                %a.btn.btn-secondary.float-right{href: "/garage/add"}
-                  Create
-                  %i.fa.fa-arrow-right

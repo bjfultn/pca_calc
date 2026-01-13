@@ -57,6 +57,7 @@ html {
   h2 {
     font-size: 2.2rem;
     line-height: 1.9rem;
+    letter-spacing: 0.05em;
   }
 
   h3 {
@@ -244,6 +245,12 @@ html {
     overflow: hidden;
     width: 50%;
     float: left;
+  }
+
+  // Add extra spacing between form fields (form.as_p renders each field as a <p> tag)
+  #car_form .form-group > p,
+  form .form-group > p {
+    margin-bottom: 1.5rem;
   }
   
   .shaded {
