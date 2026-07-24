@@ -16,7 +16,7 @@ class Tire(models.Model):
     race_tires = models.BooleanField(default=False,
                             verbose_name="Do you have race tires? Treadwear less than 140, or no official treadwear will automatically put your car into CCR.")
     autox_tires = models.BooleanField(default=False,
-                            verbose_name="Do you have autox tires? Treadwear greater than or equal to 140, but less than or equal to 200 (+20 points)")
+                            verbose_name="Do you have autox tires? Treadwear greater than or equal to 140, but less than or equal to 200 (+20 points). Note that the AutoX committee has voted, and the Vitour Sonic 200tw tire will not be allowed as an \"AutoX tire.\" They are considered a \"Race tire\" and will compete in CCR.")
     street_tires = models.BooleanField(default=False,
                             verbose_name="Do you have street tires? Treadwear greater than 200 (+0 points)")
 
