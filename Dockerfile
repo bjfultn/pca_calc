@@ -36,8 +36,11 @@ RUN touch /code/.env
 
 WORKDIR /code
 
-# Create static directory and collect static files during build
-RUN mkdir -p /code/static && \
+# Compile SCSS (static/ is gitignored, so the CSS isn't in the repo), then
+# collect static files
+RUN mkdir -p /code/static/stylesheets && \
+    sass assets/stylesheets/application.scss static/stylesheets/application.css && \
+    sass assets/stylesheets/admin.scss static/stylesheets/admin.css && \
     python manage.py collectstatic --noinput
 
 CMD /code/docker_init_production.sh
