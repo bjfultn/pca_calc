@@ -46,11 +46,14 @@ class Car(models.Model):
         except Exception as e:
             return e
 
+    def year_points(self):
+        return int(self.year) - 2010
+
     def base_points(self):
         wheels = 5*(self.front_wheel_width + self.rear_wheel_width - 12)
         if wheels < 0:
             wheels = 0
-        bp = (4000 / (self.weight/self.horsepower)) + (int(self.year) - 2010) + \
+        bp = (4000 / (self.weight/self.horsepower)) + self.year_points() + \
              wheels
 
         return bp

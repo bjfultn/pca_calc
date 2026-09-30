@@ -29,6 +29,8 @@
               %td
                 Color: {{ car.color }}
                 %br
+                Model Year: {{ car.year }} ({{ car.year_points|stringformat:"+d" }} pts)
+                %br
                 Weight: {{ car.weight }}
                 %br
                 HP: {{ car.horsepower }}
